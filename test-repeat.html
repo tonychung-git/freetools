@@ -29,6 +29,21 @@
       border-radius: 5px;
     }
 
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
     ul {
       list-style-type: none;
       padding: 0;
@@ -52,12 +67,15 @@
 
 <body>
   <h1>YouTube Playlist Player</h1>
-  <input type="text" id="videoId" placeholder="Enter YouTube URL or Video ID">
-  <button onclick="addVideo()">Add Video</button><br>
-
-  <label><input type="checkbox" id="loopSingle"> Loop Single Video</label>
-  <label><input type="checkbox" id="loopPlaylist" checked> Loop Playlist</label>
-  <label><input type="checkbox" id="shuffleMode"> Shuffle Mode</label>
+  <div class="controls-container">
+    <input type="text" id="videoId" placeholder="Enter YouTube URL or Video ID">
+    <button onclick="addVideo()">Add Video</button>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="loopSingle"> Loop Single Video</label>
+      <label><input type="checkbox" id="loopPlaylist" checked> Loop Playlist</label>
+      <label><input type="checkbox" id="shuffleMode"> Shuffle Mode</label>
+    </div>
+  </div>
 
   <div id="player"></div>
 
