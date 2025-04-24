@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Playlist Player</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    #player {
+      margin: 20px 0;
+    }
+
+    input, button, label {
+      margin: 5px;
+      background: #1f1f1f;
+      color: #fff;
+      border: 1px solid #444;
+      padding: 8px;
+      border-radius: 5px;
+    }
+
+    .controls-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      width: 400px;
+    }
+
+    li {
+      background-color: #1f1f1f;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: move;
+    }
+
+    .playing {
+      background-color: #333333;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1>YouTube Playlist Player</h1>
+  <div class="controls-container">
+    <input type="text" id="videoId" placeholder="Enter YouTube URL or Video ID">
+    <button onclick="addVideo()">Add Video</button>
+    <div class="checkbox-group">
+      <label><input type="checkbox" id="loopSingle"> Loop Single Video</label>
+      <label><input type="checkbox" id="loopPlaylist" checked> Loop Playlist</label>
+      <label><input type="checkbox" id="shuffleMode"> Shuffle Mode</label>
+    </div>
+  </div>
+
+  <div id="player"></div>
+
+  <div class="nav-buttons">
+    <button onclick="prevVideo()">Previous</button>
+    <button onclick="nextVideo()">Next</button>
+  </div>
+
+  <h3>Playlist</h3>
+  <ul id="playlist" ondragover="event.preventDefault()"></ul>
+
+  <script>
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    let player;
+    let playlist = [];
+    let currentIndex = 0;
+    let shuffled = false;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    function addVideo() {
+      const input = document.getElementById('videoId').value.trim();
+      if (input) {
+        const videoId = extractVideoId(input);
+        if (videoId) {
+          playlist.push(videoId);
+          updatePlaylistUI();
+          if (playlist.length === 1) {
+            loadVideo(currentIndex);
+          }
+          document.getElementById('videoId').value = '';
+        } else {
+          alert('Invalid YouTube URL or video ID');
+        }
+      }
+    }
+
+    function extractVideoId(input) {
+      // Handle direct video IDs
+      if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+        return input;
+      }
+
+      // Handle various YouTube URL formats
+      let videoId = '';
+      
+      // Handle youtu.be format
+      if (input.includes('youtu.be/')) {
+        videoId = input.substring(input.indexOf('youtu.be/') + 9);
+      }
+      // Handle youtube.com/watch?v= format
+      else if (input.includes('youtube.com/watch')) {
+        const urlParams = new URLSearchParams(input.substring(input.indexOf('?')));
+        videoId = urlParams.get('v');
+      }
+      // Handle youtube.com/embed/ format
+      else if (input.includes('youtube.com/embed/')) {
+        videoId = input.substring(input.indexOf('embed/') + 6);
+      }
+
+      // Clean up the video ID
+      if (videoId) {
+        // Remove any additional parameters
+        if (videoId.includes('&')) {
+          videoId = videoId.substring(0, videoId.indexOf('&'));
+        }
+        // Remove any hash fragments
+        if (videoId.includes('#')) {
+          videoId = videoId.substring(0, videoId.indexOf('#'));
+        }
+        // Validate the video ID format
+        if (/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+          return videoId;
+        }
+      }
+      
+      return null;
+    }
+
+    function loadVideo(index) {
+      currentIndex = index;
+      player.loadVideoById(playlist[currentIndex]);
+      updatePlaylistUI();
+    }
+
+    function nextVideo() {
+      if (playlist.length === 0) return;
+      currentIndex++;
+      if (currentIndex >= playlist.length) {
+        if (document.getElementById('loopPlaylist').checked) {
+          shuffleIfNeeded();
+          currentIndex = 0;
+        } else return;
+      }
+      loadVideo(currentIndex);
+    }
+
+    function prevVideo() {
+      if (playlist.length === 0) return;
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadVideo(currentIndex);
+    }
+
+    function shuffleIfNeeded() {
+      if (document.getElementById('shuffleMode').checked) {
+        playlist = shuffleArray(playlist);
+        updatePlaylistUI();
+      }
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        if (document.getElementById('loopSingle').checked) {
+          player.playVideo();
+        } else {
+          nextVideo();
+        }
+      }
+    }
+
+    function updatePlaylistUI() {
+      const ul = document.getElementById('playlist');
+      ul.innerHTML = '';
+      playlist.forEach((id, index) => {
+        const li = document.createElement('li');
+        li.textContent = `#${index + 1}: ${id}`;
+        li.draggable = true;
+        li.className = index === currentIndex ? 'playing' : '';
+
+        li.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', index);
+        });
+
+        li.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+          const toIndex = index;
+          const [moved] = playlist.splice(fromIndex, 1);
+          playlist.splice(toIndex, 0, moved);
+          updatePlaylistUI();
+        });
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '✕';
+        removeBtn.onclick = () => {
+          playlist.splice(index, 1);
+          if (index === currentIndex && playlist.length > 0) {
+            loadVideo(currentIndex % playlist.length);
+          } else if (playlist.length === 0) {
+            player.stopVideo();
+          } else if (index < currentIndex) {
+            currentIndex--;
+          }
+          updatePlaylistUI();
+        };
+        li.appendChild(removeBtn);
+        ul.appendChild(li);
+      });
+    }
+
+    function shuffleArray(array) {
+      let shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
+  </script>
+</body>
+
+</html>
