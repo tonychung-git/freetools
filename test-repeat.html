@@ -1,166 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YouTube Playlist Player</title>
   <style>
     body {
       background-color: #121212;
       color: #ffffff;
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
     }
-    input, button, select {
-      background-color: #333;
+
+    #player {
+      margin: 20px 0;
+    }
+
+    input, button, label {
+      margin: 5px;
+      background: #1f1f1f;
       color: #fff;
       border: 1px solid #444;
       padding: 8px;
-      margin: 5px;
+      border-radius: 5px;
     }
-    iframe {
-      width: 100%;
-      height: 450px;
-      margin-top: 10px;
-      border: none;
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      width: 400px;
     }
-    .controls {
-      margin-top: 10px;
+
+    li {
+      background-color: #1f1f1f;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: move;
     }
-    .video-title {
-      font-size: 18px;
-      margin-top: 10px;
-    }
-    label {
-      margin-right: 10px;
+
+    .playing {
+      background-color: #333333;
     }
   </style>
 </head>
+
 <body>
-  <div class="container">
-    <h1>YouTube Playlist Player</h1>
-    <input type="text" id="videoInput" placeholder="Enter YouTube video URL" />
-    <button onclick="addVideo()">Add Video</button>
-    <br>
-    <label><input type="checkbox" id="loopPlaylist" /> Loop Playlist</label>
-    <label><input type="checkbox" id="loopSingle" /> Loop Single Video</label>
+  <h1>YouTube Playlist Player</h1>
 
-    <div class="controls">
-      <button onclick="prevVideo()">Previous</button>
-      <button onclick="nextVideo()">Next</button>
-    </div>
+  <input type="text" id="videoId" placeholder="Enter YouTube Video ID">
+  <button onclick="addVideo()">Add Video</button><br>
 
-    <iframe id="player" allow="autoplay"></iframe>
-    <div class="video-title" id="videoTitle"></div>
+  <label><input type="checkbox" id="loopSingle"> Loop Single Video</label>
+  <label><input type="checkbox" id="loopPlaylist" checked> Loop Playlist</label>
+  <label><input type="checkbox" id="shuffleMode"> Shuffle Mode</label>
 
-    <ul id="playlist"></ul>
-  </div>
+  <div id="player"></div>
+
+  <button onclick="prevVideo()">Previous</button>
+  <button onclick="nextVideo()">Next</button>
+
+  <h3>Playlist</h3>
+  <ul id="playlist" ondragover="event.preventDefault()"></ul>
 
   <script>
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+
+    let player;
     let playlist = [];
     let currentIndex = 0;
-    let iframe = document.getElementById("player");
-    let titleDiv = document.getElementById("videoTitle");
-    let loopPlaylistCheckbox = document.getElementById("loopPlaylist");
-    let loopSingleCheckbox = document.getElementById("loopSingle");
+    let shuffled = false;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
 
     function addVideo() {
-      const input = document.getElementById("videoInput");
-      const url = input.value;
-      const videoID = extractVideoID(url);
-      if (videoID) {
-        fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
-          .then(response => response.json())
-          .then(data => {
-            playlist.push({ id: videoID, title: data.title });
-            updatePlaylistUI();
-            if (playlist.length === 1) playVideo(0);
-          });
-      }
-      input.value = "";
-    }
-
-    function extractVideoID(url) {
-      const match = url.match(/[?&]v=([^&]+)/) || url.match(/youtu\.be\/([^?]+)/);
-      return match ? match[1] : null;
-    }
-
-    function playVideo(index) {
-      if (index >= 0 && index < playlist.length) {
-        currentIndex = index;
-        const videoID = playlist[currentIndex].id;
-        const loopSingle = loopSingleCheckbox.checked;
-        const loopParam = loopSingle ? `&loop=1&playlist=${videoID}` : "";
-        iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1${loopParam}&enablejsapi=1&rel=0`;
-        titleDiv.textContent = playlist[currentIndex].title;
+      const videoId = document.getElementById('videoId').value.trim();
+      if (videoId) {
+        playlist.push(videoId);
+        updatePlaylistUI();
+        if (playlist.length === 1) {
+          loadVideo(currentIndex);
+        }
+        document.getElementById('videoId').value = '';
       }
     }
 
-    function prevVideo() {
-      if (currentIndex > 0) {
-        playVideo(currentIndex - 1);
-      }
+    function loadVideo(index) {
+      currentIndex = index;
+      player.loadVideoById(playlist[currentIndex]);
+      updatePlaylistUI();
     }
 
     function nextVideo() {
-      if (currentIndex < playlist.length - 1) {
-        playVideo(currentIndex + 1);
-      } else if (loopPlaylistCheckbox.checked) {
-        playVideo(0);
+      if (playlist.length === 0) return;
+      currentIndex++;
+      if (currentIndex >= playlist.length) {
+        if (document.getElementById('loopPlaylist').checked) {
+          shuffleIfNeeded();
+          currentIndex = 0;
+        } else return;
+      }
+      loadVideo(currentIndex);
+    }
+
+    function prevVideo() {
+      if (playlist.length === 0) return;
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadVideo(currentIndex);
+    }
+
+    function shuffleIfNeeded() {
+      if (document.getElementById('shuffleMode').checked) {
+        playlist = shuffleArray(playlist);
+        updatePlaylistUI();
+      }
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        if (document.getElementById('loopSingle').checked) {
+          player.playVideo();
+        } else {
+          nextVideo();
+        }
       }
     }
 
     function updatePlaylistUI() {
-      const ul = document.getElementById("playlist");
-      ul.innerHTML = "";
-      playlist.forEach((video, index) => {
-        const li = document.createElement("li");
-        li.textContent = video.title;
-        li.style.cursor = "pointer";
-        li.onclick = () => playVideo(index);
-        const delBtn = document.createElement("button");
-        delBtn.textContent = "Remove";
-        delBtn.onclick = (e) => {
-          e.stopPropagation();
+      const ul = document.getElementById('playlist');
+      ul.innerHTML = '';
+      playlist.forEach((id, index) => {
+        const li = document.createElement('li');
+        li.textContent = `#${index + 1}: ${id}`;
+        li.draggable = true;
+        li.className = index === currentIndex ? 'playing' : '';
+
+        li.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', index);
+        });
+
+        li.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+          const toIndex = index;
+          const [moved] = playlist.splice(fromIndex, 1);
+          playlist.splice(toIndex, 0, moved);
+          updatePlaylistUI();
+        });
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '✕';
+        removeBtn.onclick = () => {
           playlist.splice(index, 1);
           if (index === currentIndex && playlist.length > 0) {
-            currentIndex = 0;
-            playVideo(0);
+            loadVideo(currentIndex % playlist.length);
           } else if (playlist.length === 0) {
-            iframe.src = "";
-            titleDiv.textContent = "";
+            player.stopVideo();
           } else if (index < currentIndex) {
             currentIndex--;
           }
           updatePlaylistUI();
         };
-        li.appendChild(delBtn);
+        li.appendChild(removeBtn);
         ul.appendChild(li);
       });
     }
 
-    // Listen for end of video (requires YouTube API)
-    window.onYouTubeIframeAPIReady = function() {
-      new YT.Player('player', {
-        events: {
-          'onStateChange': function(event) {
-            if (event.data === YT.PlayerState.ENDED) {
-              if (!loopSingleCheckbox.checked) nextVideo();
-            }
-          }
-        }
-      });
-    };
-
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
+    function shuffleArray(array) {
+      let shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
   </script>
 </body>
+
 </html>
