@@ -6,25 +6,49 @@
   <style>
     body {
       font-family: sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
       text-align: center;
       padding: 30px;
-      background-color: #f0f0f0;
     }
-    textarea, button {
+    h1 {
+      color: #ffffff;
+    }
+    textarea {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
       font-size: 16px;
-      padding: 8px;
+      padding: 10px;
       margin: 10px;
+      width: 80%;
+      resize: vertical;
+    }
+    button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #555;
     }
     iframe {
       margin-top: 20px;
       width: 720px;
       height: 405px;
-      border: none;
+      border: 2px solid #444;
+      background-color: black;
     }
     #currentTitle {
       font-size: 20px;
       font-weight: bold;
       margin-top: 20px;
+      color: #ffffff;
     }
     .controls button {
       margin: 5px;
@@ -119,7 +143,6 @@
       playCurrentVideo();
     }
 
-    // 監聽 iframe 播放結束事件
     window.onYouTubeIframeAPIReady = function () {
       player = new YT.Player('youtubePlayer', {
         events: {
@@ -134,7 +157,6 @@
       }
     }
 
-    // 載入 YouTube iframe API
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
