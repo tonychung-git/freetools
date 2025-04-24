@@ -44,6 +44,12 @@
       align-items: center;
     }
 
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
     ul {
       list-style-type: none;
       padding: 0;
@@ -79,8 +85,10 @@
 
   <div id="player"></div>
 
-  <button onclick="prevVideo()">Previous</button>
-  <button onclick="nextVideo()">Next</button>
+  <div class="nav-buttons">
+    <button onclick="prevVideo()">Previous</button>
+    <button onclick="nextVideo()">Next</button>
+  </div>
 
   <h3>Playlist</h3>
   <ul id="playlist" ondragover="event.preventDefault()"></ul>
