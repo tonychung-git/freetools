@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW" xml:lang="zh-TW" dir="ltr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>YouTube Repeat</title>
+<link href="//youtuberepeat.blogspot.com/favicon.ico" rel="icon" type="image/x-icon">
+<!--<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjLhyolN4LqQ165SqvTnvk4eFmEDz2xrVv3rt8wGRrAT8OkS9B2BehivgjjsPphl-AJpDv_oQztJX3qNTApayq9bhOg0dQXlx-XN-IMw7EmUG8-IxDHw6XwUHMiFC_BV00gExx-lYJl5U/' rel='icon' type='image/x-icon'/>
+<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjLhyolN4LqQ165SqvTnvk4eFmEDz2xrVv3rt8wGRrAT8OkS9B2BehivgjjsPphl-AJpDv_oQztJX3qNTApayq9bhOg0dQXlx-XN-IMw7EmUG8-IxDHw6XwUHMiFC_BV00gExx-lYJl5U/' rel='Bookmark'/>
+<link href='https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjLhyolN4LqQ165SqvTnvk4eFmEDz2xrVv3rt8wGRrAT8OkS9B2BehivgjjsPphl-AJpDv_oQztJX3qNTApayq9bhOg0dQXlx-XN-IMw7EmUG8-IxDHw6XwUHMiFC_BV00gExx-lYJl5U/' rel='shortcut icon'/>-->
+<style>
+body {
+	margin: 0px;
+	background-color: black;
+	color: white;
+}
+#navbar-iframe {
+	visibility: hidden;
+	display: none;
+}
+#___plusone_0 {
+	padding-top: 5px !important;
+}
+#quickbookmark, #shareformats {
+	text-align: center;
+}
+a {
+	color: #0066FF;
+}
+a:visited {
+	color: #7744FF;
+}
+hr {
+	border: thin dotted lightgrey;
+}
+input {
+	height: 18px;
+}
+input, .btn{
+	background: white;
+	margin: 1px;
+	border: 1px solid #bbb;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+.btn:hover {
+	color: gray;
+}
+#mobileplayer {
+	border: 0;
+}
+#b3, #b4, #b5, #b6 {
+	width: 24px;
+	height: 22px;
+	text-align: center;
+}
+.bk {
+	background: white url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9csF5vFcnqAEXR98fzXP663HXz4AIs0E6lsVWKQnZPFJGFcrW_RBRMeBsxJDXeouhyphenhyphenf_klFx_NkNw4RIXg2LjitVtQPhgm9yluIthE8Z-BOTy9mgxoKrq2GzjkpAeGtm3nzLiSiBlxJk/) 0 0 no-repeat;
+	height: 22px;
+	padding-left: 18px;
+}
+.play {
+	background-position: 0 0;
+}
+.return {
+	background-position: 0 -36px;
+}
+#mobileplayer {
+	width: 640px;
+	height: 390px;
+	background: white url(https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWjPO38edbyDkHZuqzOPXcwmBAKq3tL2Srfks2rtt3XYiJvrgfZatWftNNhaR7D_0vbTFH8LwMZcyl0BWvpv-DgWtg3SoH0p05I9MebWs1hGF1Tq7-tkfAEd4E9uqfBNj3Y8q9QBbFczY/s0/20149849409.png) 0 0 no-repeat;
+}
+</style>
+<script src="https://www.google.com/jsapi"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script type="text/javascript">
+function $(a){switch(a.substr(0,1)){case "#":return document.getElementById(a.substr(1));case ".":var b=document.body.getElementsByTagName("*");a=a.substr(1);var c=[];for(i=0;j=b[i];i++)-1!=j.className.indexOf(a)&&c.push(j);return c;default:return document.getElementsByTagName(a)}}
+var isMobile=function(){var a=navigator.userAgent||navigator.vendor||window.opera;return/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s)|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg(g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,
+4))}(),getjsonp=function(){this.head=document.getElementsByTagName("head")[0]||document.documentElement;this.current=null;this.queue=[]};getjsonp.prototype.request=function(a){var b=(a.fid||"_getjsonp")+(new Date).getTime();console.log(b);var c=document.createElement("script");c.src=a.url.replace("callback=?","callback="+b);this.queue.push({fid:b,script:c,load:a.load});this.current||this.action()};
+getjsonp.prototype.action=function(){var a=this;this.current=null;this.queue.length&&(this.current=this.queue.shift(),window[this.current.fid]=function(b){a.head.removeChild(a.current.script);a.current.load&&a.current.load(b);a.action()},this.head.appendChild(this.current.script))};
+var searchCount=1,search=function(a,b){a=a.replace(/[,-]/g," ");(new getjsonp).request({fid:"_mikujsonp",url:"https://www.googleapis.com/youtube/v3/search?key=AIzaSyBqiceSu2bcq4XWlwoxaiS96dkp0Z6wyaM&type=video&videoEmbeddable=true&part=snippet&maxResults="+searchCount+"&q="+a+"&callback=?",load:function(a){0==a.items.length?search("\u3010Hatsune Miku\u3011404 - Not Found",b):filter(a.items[a.items.length-1].id.videoId,b)}})},search_old=function(a,b){var c,d=function(){0==c.results.length?filter("",
+b):filter(c.results[0].url,b)};google.load("search","1",{callback:function(){c=new google.search.VideoSearch;c.setSearchCompleteCallback(this,d,null);c.execute(a)}})},filter=function(a,b){a?(-1!=a.indexOf("?")&&(a=a.substring(a.indexOf("?")+1,a.length)),-1!=a.indexOf("v=")&&(a=a.substring(a.indexOf("v=")+2,a.length)),-1!=a.indexOf("&")&&(a=a.substring(0,a.indexOf("&"))),-1!=a.indexOf("#")&&(a=a.substring(0,a.indexOf("#"))),-1!=a.indexOf("youtu.be/")&&(a=a.substring(a.indexOf("youtu.be/")+9,a.length))):
+a="\u3010Hatsune Miku\u3011404 - Not Found";/^[a-zA-Z0-9_-]{11,11}$/.test(a)?b(a):search(decodeURIComponent(a),b)},playerboxy,onPlayerStateChange=function(a){a.data==YT.PlayerState.ENDED&&a.target.playVideo()},onPlayerError=function(a){150==a.data&&10>searchCount&&(searchCount++,console.log("[Error] Number of searches: ",searchCount),play())},target="",show=function(a){a==target?(a="",target="default"):target=a;switch(a){case "share":$("#share").style.display="block";$("#tool").style.display="none";
+$("#main").style.display="none";break;case "tool":$("#share").style.display="none";$("#tool").style.display="block";$("#main").style.display="none";break;case "help":$("#share").style.display="none";$("#tool").style.display="none";$("#main").style.display="block";break;default:$("#share").style.display="none",$("#tool").style.display="none",$("#main").style.display="none"}},refresh=function(a){$("#longcode").innerHTML="http://www.youtube.com/watch?v="+a;$("#longurl").href="http://youtuberepeat.blogspot.com/?http://www.youtube.com/watch?v="+
+a;$("#mediumurl").href="http://youtuberepeat.blogspot.com/?v="+a;$("#mediumcode").innerHTML=a;$("#shorturl").href="http://youtuberepeat.blogspot.com/?"+a;$("#shortcode").innerHTML=a;$("#weburl").href="http://youtuberepeat.blogspot.com/?m=0&v="+a;$("#webcode").innerHTML=a},first=!0,youtubeCode="",play=function(a){a=a?a:$("#keyword").value;filter(a,function(a){youtubeCode=a;console.log("videoId: http://www.youtube.com/watch?v="+a);refresh(a);first?(playerboxy=new YT.Player("playerboxy",{height:"390",
+width:"640",videoId:youtubeCode,events:{onReady:onPlayerReady,onStateChange:onPlayerStateChange,onError:onPlayerError}}),first=!1):playerboxy.loadVideoById({videoId:a,suggestedQuality:"default"})})},jump=function(){location.href="http://www.youtube.com/watch?v="+youtubeCode},onPlayerReady=function(){console.log("player...Ready");isMobile||playerboxy.playVideo()};
+window.onload=function(){console.clear&&console.clear();console.log("window...Ready");var a=window.location.toString();-1!=a.indexOf("?")&&a.indexOf("m=0")+3!=a.length&&play(a);$("#keyword").onkeydown=function(a){13==(window.event?a.keyCode:a.which)&&(searchCount=1,play())};$("#play").onclick=function(){searchCount=1;play()};$("#jump").onclick=function(){jump()};$("#btn_share").onclick=function(){show("share")};$("#btn_tool").onclick=function(){show("tool")};$("#btn_help").onclick=function(){show("help")};
+$("#keyword").focus()};
+</script>
+<!--[if gt IE 6]><!-->
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+	{lang: 'zh-TW'}
+</script>
+<!--><![endif]-->
+<script type="text/javascript">
+(function() {
+//No country redirect
+var regex = new RegExp(/\.blogspot\.(com\...\/|..\/)/);
+if( document.URL.match(regex) ) {
+	var url = document.URL;
+	url = url.replace(url.match(regex)[0], ".blogspot.com\/ncr\/");
+	document.location = url;
+}
+}());
+/* <link rel="me" href="https://www.blogger.com/profile/01159924330884887144" />
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+<!-- --><style type="text/css">@import url(https://www.blogger.com/static/v1/v-css/navbar/3334278262-classic.css);
+div.b-mobile {display:none;}
+</style>
+
+</head> */</script>
+</head>
+<!-- <body><script type="text/javascript">
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  </script>
+<div id="navbar-iframe-container"></div>
+<script type="text/javascript" src="https://apis.google.com/js/platform.js"></script>
+<script type="text/javascript">
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar/8485782123016739731?origin\x3dhttps://youtuberepeat.blogspot.com',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    </script> -->
+<body>
+<div align="center">
+	<input id="keyword" onclick="this.select();" size="50" type="text" value="" placeholder=" URL or keyword" />
+	<button id="play" class="btn bk play" title="Play(播放)">Search</button>
+	<button id="jump" class="btn bk return" title="Back to YouTube(返回Youtube)">Return</button>
+	<!--<button id="b3" onclick="smallPlayer();" disabled="disabled" title="Small Size(小)">S</button>
+	<button id="b4" onclick="normalPlayer();" disabled="disabled" title="Normal Size(中)">N</button>
+	<button id="b5" onclick="largePlayer();" disabled="disabled" title="Large Size(大)">L</button>
+	<button id="b6" onclick="hdPlayer();" disabled="disabled" title="Full Screen(全螢幕)">F</button>-->
+	<br />
+	<div>
+		<div id="playerboxy" style="display:block;">
+			<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjx_LrbJG6m-Q0fd98svMPoOItWPxV9LVTmqjLBvT5dYXSgKXqDRErsQwlVpMlFuK3Qa1hW25Yuf8JKbhVgRjoj3vQE_yMQEO-85H5TinE3Ebu-LA1RKzaG5U7wO9beqGZqyi9xpzWFusc/s0/6140894980496841.png" />
+		</div>
+	</div>
+	<div style="margin-left:30px;_margin-left:30px">
+		<table>
+			<tr>
+				<td>
+					<button class="btn" id="btn_share">Share</button>
+					<button class="btn" id="btn_tool">Tool</button>
+					<button class="btn" id="btn_help">Help</button>
+				</td>
+				<td>
+					<g:plusone size="medium" href="http://youtuberepeat.blogspot.com/"></g:plusone>
+				</td>
+				<td>
+					<div id="fb-root"></div><script src="//connect.facebook.net/en_US/all.js#appId=258282284184246&amp;xfbml=1"></script><fb:like href="http://youtuberepeat.blogspot.com/" send="true" layout="button_count" width="100" height="20" show_faces="false" colorscheme="dark" font=""></fb:like>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div id="share" style="display:none;">
+	<hr />
+	<h2>Share Link</h2>
+	<a id="longurl" href="http://youtuberepeat.blogspot.com/"><span class="Apple-style-span" style="color: lime;">http://youtuberepeat.blogspot.com/</span><span class="Apple-style-span" style="color: yellow;"><b>?</b></span><span id="longcode" class="Apple-style-span" style="color: deepskyblue;"></span></a><br />
+	or<br />
+	<a id="mediumurl" href="http://youtuberepeat.blogspot.com/"><span class="Apple-style-span" style="color: lime;">http://youtuberepeat.blogspot.com/</span><span class="Apple-style-span" style="color: yellow;"><b>?v=</b></span><span id="mediumcode" class="Apple-style-span" style="color: deepskyblue;"></span></a><br />
+	or<br />
+	<a id="shorturl" href="http://youtuberepeat.blogspot.com/"><span class="Apple-style-span" style="color: lime;">http://youtuberepeat.blogspot.com/</span><span class="Apple-style-span" style="color: yellow;"><b>?</b></span><span id="shortcode" class="Apple-style-span" style="color: deepskyblue;"></span></a><br />
+	or<br />
+	<a id="weburl" href="http://youtuberepeat.blogspot.com/"><span class="Apple-style-span" style="color: lime;">http://youtuberepeat.blogspot.com/</span><span class="Apple-style-span" style="color: yellow;"><b>?m=0&v=</b></span><span id="webcode" class="Apple-style-span" style="color: deepskyblue;"></span></a><br />
+	<br />
+</div>
+<div id="tool" style="display:none;">
+	<hr />
+	<h2>Add quick repeat bookmark (for IE and Firefox)</h2>
+	<input size="100" type="text" onclick="select()" value="javascript:location.href='http://youtuberepeat.blogspot.com/?'+location.href;" />
+	<h2>Add quick repeat button (for Google Chrome Tampermonkey and Firefox Greasemonkey</h2>
+	<b>Install:</b> <a target="_blank" href="https://greasyfork.org/zh-TW/scripts/8651-youtuberepeat">https://greasyfork.org/zh-TW/scripts/8651-youtuberepeat</a><br />
+	<br />
+	<img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbXSLxfNoqXImmZd4ykPcIvmgUt3CVMQw62f5cnolZwm5XACKusDxuTu0qUZ2Ln3Tkff6Srpsg6kTt6QkAOgDDIj1j6kc8NfD-lnLO9MBcDriWT8EgQXS-GwjReJ5DniPGoR9RLlZY_pg/s0/95098498419804.png" /><br />
+	<br />
+</div>
+<!-- Start #main -->
+<div id="main" style="display:none;">
+	<hr />
+	<h2>Help</h2>
+	
+		<div class="post"><a name="2784179023891535571"></a>
+			
+			<div class="post-body">
+				<p>
+					<div style="clear:both;"></div><h3>
+Youtube重複播放工具使用說明：</h3>
+<div class="separator" style="clear: both; text-align: center;">
+<a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTD_-I8QROU6jbHSesOsuwT7T965gwXuDYd_eJx2s63BpE4XOcpfysKltrfjpT_q3l_q5SE_0A3YyBkqkzuvwDuZkTt3n6F-msAR2tOJRqjlClDq9MHpqqtTv6EtGQDQAxLj73m71JuUI/s1600/560984980479870870.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTD_-I8QROU6jbHSesOsuwT7T965gwXuDYd_eJx2s63BpE4XOcpfysKltrfjpT_q3l_q5SE_0A3YyBkqkzuvwDuZkTt3n6F-msAR2tOJRqjlClDq9MHpqqtTv6EtGQDQAxLj73m71JuUI/s1600/560984980479870870.png" /></a></div>
+<ol>
+<li>輸入網址或關鍵字</li>
+<ul>
+<li>支援關鍵字、完整網址、短網址等</li>
+</ul>
+<li>播放或搜尋按鈕</li>
+<li>回到Youtube網站播放</li>
+<li>產生分享連結<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+</li>
+<ul>
+<li>提供各種分享網址格式</li>
+</ul>
+<li>快速播放工具</li>
+<ul>
+<li>書籤方式，請將語法加入您瀏覽器的書籤。</li>
+<li>腳本方式，請使用第三方工具(如:Greasemonkey)進行安裝。</li>
+</ul>
+<li>幫助</li>
+</ol>
+<h3>
+版本:</h3>
+<ul>
+<li>YouTube Repeat blogspot v0.9</li>
+</ul>
+<h3>
+更新記錄:</h3>
+<ul>
+<li>2011.05.19 - 重覆播放機能完成。</li>
+<li>2011.05.28 - 讀取URL播放機能完成。</li>
+<li>2011.05.29 - Enter鍵播放、游標鎖定初始位置。</li>
+<li>2011.05.30 - 輸入框改到上方以方面快速貼入網址。</li>
+<li>2011.06.03 - 變數擷取機制改寫可減短化播放網址。</li>
+<li>2011.07.30 - 快速重複播放書籤。</li>
+<li>2011.08.02 - 工具網址搬家、增加分享格式、書籤按鈕更新、增加縮放按鈕。</li>
+<li>2011.08.14 - 增加適用於新版Google Chrome之腳本按鈕。</li>
+<li>2011.08.29 - 加入搜尋功能，輸入關鍵字按下Play立即播放最佳搜尋結果。</li>
+<li>2011.08.30 - 美化按鈕風格。</li>
+<li>2011.09.14 - 修正與其它擴充功能衝突。</li>
+<li>2012.05.11 - 因Youtube大改版，暫時提升播放器版本，播放器縮放功能已關閉。</li>
+<li>2014.11.20 - 整合新的搜尋引擎API、新的播放器API</li>
+<li>2014.11.21 - 增加對行動裝置的支援</li>
+<li>2015.03.18 - 修復擴充元件連結、超連結配色修改</li>
+<li>2016.06.27 - 搜尋引擎升級Youtube v3</li>
+<li>2017.11.02 - 改善搜尋結果、加入嘗試重新搜尋10次</li>
+</ul>
+<h3>
+作者：</h3>
+<ul>
+<li><a href="http://qqboxy.blogspot.com/" target="_blank">QQBoxy (Hoi)</a></li>
+</ul>
+<script id="_wau40m">var _wau = _wau || []; _wau.push(["classic", "8ju8uba2qs92", "40m"]);
+(function() {var s=document.createElement("script"); s.async=true;
+s.src="http://widgets.amung.us/classic.js";
+document.getElementsByTagName("head")[0].appendChild(s);
+})();</script><div style="clear:both; padding-bottom:0.25em"></div><p class="blogger-labels">標籤： <a rel='tag' href="http://youtuberepeat.blogspot.com/search/label/Youtube">Youtube</a></p>
+				</p>
+			</div>
+			<p class="post-footer">
+				<em>張貼者：QQBoxy @ <a href="http://youtuberepeat.blogspot.com/2011/08/youtube_01.html" title="permanent link">凌晨12:59</a></em>&nbsp;
+				
+					
+						<a class="comment-link" href="https://www.blogger.com/comment/fullpage/post/8485782123016739731/2784179023891535571" onclick="window.open('https://www.blogger.com/comment/fullpage/post/8485782123016739731/2784179023891535571', 'bloggerPopup', 'toolbar=0,scrollbars=1,location=0,statusbar=1,menubar=0,resizable=1,width=400,height=450');return false;"><span style="text-transform:lowercase">7 個意見</span></a>
+					
+					
+				
+				<span class="item-control blog-admin pid-92980832"><a style="border:none;" href="https://www.blogger.com/post-edit.g?blogID=8485782123016739731&postID=2784179023891535571&from=pencil" title="編輯文章"><img class="icon-action" alt="" src="https://resources.blogblog.com/img/icon18_edit_allbkg.gif" height="18" width="18"></a></span>
+			</p>
+		</div>
+		
+	
+</div>
+<!-- End #main -->
+<!-- </body> -->
+</body>
+</html>
