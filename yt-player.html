@@ -96,6 +96,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>YouTube 播放清單播放器</title>
+  <!-- <link rel="stylesheet" href="styles.css"> -->
   <style>
     body {
       font-family: sans-serif;
@@ -130,6 +131,18 @@
       transition: background-color 0.2s;
     }
     button:hover { background-color: #555; }
+
+    .homebtn {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin: 8px 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .homebtn:hover { background-color: #555; }
 
     #playerContainer {
       position: relative;
@@ -206,6 +219,10 @@
         font-size: 14px;
         padding: 8px 12px;
       }
+      .homebtn {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
       ul#playlist li {
         font-size: 12px;
         padding: 6px 8px;
@@ -215,7 +232,10 @@
 </head>
 
 <body>
-  <p><a class="" href="https://freetools.uk">🔧 FreeTools.uk </a></p>
+  <button class="homebtn" onclick="window.location.href='https://freetools.uk'">🔧 FreeTools.uk</button>
+
+
+
   <h1>YouTube 播放清單播放器</h1>
   <p>請輸入多個 YouTube 影片連結，每行一個</p>
 
