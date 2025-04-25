@@ -99,6 +99,8 @@
     <button onclick="prevVideo()">⏮ 上一部</button>
     <button onclick="nextVideo()">⏭ 下一部</button>
     <button onclick="removeCurrent()">🗑 移除當前影片</button>
+    <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button>
+    <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button>
   </div>
 
   <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
@@ -111,6 +113,27 @@
     let currentIndex = 0;
     let player;
     const videoTitles = {}; // 快取影片標題
+
+    let loopPlaylist = false;
+    let loopSingle = false;
+
+    function toggleLoopPlaylist() {
+      loopPlaylist = !loopPlaylist;
+      if (loopPlaylist && loopSingle) {
+        loopSingle = false;
+        document.getElementById("loopSingleStatus").textContent = "關";
+      }
+      document.getElementById("loopPlaylistStatus").textContent = loopPlaylist ? "開" : "關";
+    }
+
+    function toggleLoopSingle() {
+      loopSingle = !loopSingle;
+      if (loopSingle && loopPlaylist) {
+        loopPlaylist = false;
+        document.getElementById("loopPlaylistStatus").textContent = "關";
+      }
+      document.getElementById("loopSingleStatus").textContent = loopSingle ? "開" : "關";
+    }
 
     function extractVideoID(url) {
       const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/;
@@ -268,7 +291,16 @@
 
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
-        nextVideo();
+        if (loopSingle) {
+          playCurrentVideo();
+        } else if (currentIndex + 1 < playlist.length) {
+          nextVideo();
+        } else if (loopPlaylist) {
+          currentIndex = 0;
+          playCurrentVideo();
+        } else {
+          document.getElementById("currentTitle").textContent = "已播放完清單";
+        }
       }
     }
 
