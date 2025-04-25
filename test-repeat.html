@@ -182,19 +182,8 @@
 
     function removeCurrent() {
       if (playlist.length === 0) return;
-      // 移除 playlist 中的目前影片
       const removed = playlist.splice(currentIndex, 1)[0];
       delete videoTitles[removed];
-      
-      // 更新 textarea：將對應的 YouTube 連結從文字中移除
-      const textarea = document.getElementById("youtubeUrls");
-      const lines = textarea.value.trim().split('\n');
-      const updatedLines = lines.filter(line => {
-        const vid = extractVideoID(line.trim());
-        return vid !== removedVideoID;
-      });
-      textarea.value = updatedLines.join('\n');
-
       if (currentIndex >= playlist.length) {
         currentIndex = 0;
       }
