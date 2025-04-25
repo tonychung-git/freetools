@@ -11,9 +11,7 @@
       text-align: center;
       padding: 30px;
     }
-    h1 {
-      color: #ffffff;
-    }
+    h1 { color: #ffffff; }
     textarea {
       background-color: #1e1e1e;
       color: #e0e0e0;
@@ -34,9 +32,7 @@
       cursor: pointer;
       transition: background-color 0.2s;
     }
-    button:hover {
-      background-color: #555;
-    }
+    button:hover { background-color: #555; }
     iframe {
       margin-top: 20px;
       width: 720px;
@@ -50,9 +46,7 @@
       margin-top: 20px;
       color: #ffffff;
     }
-    .controls button {
-      margin: 5px;
-    }
+    .controls button { margin: 5px; }
     ul#playlist {
       list-style: none;
       padding: 0;
@@ -83,12 +77,6 @@
       border-radius: 4px;
       cursor: pointer;
     }
-
-    .checkbox-group {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
   </style>
 </head>
 <body>
@@ -105,180 +93,116 @@
     <button onclick="prevVideo()">⏮ 上一部</button>
     <button onclick="nextVideo()">⏭ 下一部</button>
     <button onclick="removeCurrent()">🗑 移除當前影片</button>
-    
-    <div class="checkbox-group">
-        <label><input type="checkbox" id="loopSingle">🔂 單曲循環</label>
-        <label><input type="checkbox" id="loopPlaylist" checked>🔁 播放清單循環</label>
-    </div>
-    <!-- <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button> -->
-    <!-- <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button> -->
+    <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button>
+    <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button>
   </div>
 
-  <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
+  <div id="playerContainer">
+    <div id="youtubePlayer"></div>
+  </div>
 
   <h2>播放清單</h2>
   <ul id="playlist"></ul>
 
-
   <script>
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    let player;
     let playlist = [];
     let currentIndex = 0;
-    let shuffled = false;
+    let player;
+    const videoTitles = {};
+    let loopPlaylist = false;
+    let loopSingle = false;
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '360',
-        width: '640',
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
+    function toggleLoopPlaylist() {
+      loopPlaylist = !loopPlaylist;
+      if (loopPlaylist && loopSingle) {
+        loopSingle = false;
+        document.getElementById("loopSingleStatus").textContent = "關";
+      }
+      document.getElementById("loopPlaylistStatus").textContent = loopPlaylist ? "開" : "關";
     }
 
-    function addVideo() {
-      const input = document.getElementById('videoId').value.trim();
-      if (input) {
-        const videoId = extractVideoId(input);
-        if (videoId) {
-          playlist.push(videoId);
-          updatePlaylistUI();
-          if (playlist.length === 1) {
-            loadVideo(currentIndex);
-          }
-          document.getElementById('videoId').value = '';
-        } else {
-          alert('Invalid YouTube URL or video ID');
-        }
+    function toggleLoopSingle() {
+      loopSingle = !loopSingle;
+      if (loopSingle && loopPlaylist) {
+        loopPlaylist = false;
+        document.getElementById("loopPlaylistStatus").textContent = "關";
       }
+      document.getElementById("loopSingleStatus").textContent = loopSingle ? "開" : "關";
     }
 
-    function extractVideoId(input) {
-      // Handle direct video IDs
-      if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-        return input;
-      }
-
-      // Handle various YouTube URL formats
-      let videoId = '';
-      
-      // Handle youtu.be format
-      if (input.includes('youtu.be/')) {
-        videoId = input.substring(input.indexOf('youtu.be/') + 9);
-      }
-      // Handle youtube.com/watch?v= format
-      else if (input.includes('youtube.com/watch')) {
-        const urlParams = new URLSearchParams(input.substring(input.indexOf('?')));
-        videoId = urlParams.get('v');
-      }
-      // Handle youtube.com/embed/ format
-      else if (input.includes('youtube.com/embed/')) {
-        videoId = input.substring(input.indexOf('embed/') + 6);
-      }
-
-      // Clean up the video ID
-      if (videoId) {
-        // Remove any additional parameters
-        if (videoId.includes('&')) {
-          videoId = videoId.substring(0, videoId.indexOf('&'));
-        }
-        // Remove any hash fragments
-        if (videoId.includes('#')) {
-          videoId = videoId.substring(0, videoId.indexOf('#'));
-        }
-        // Validate the video ID format
-        if (/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
-          return videoId;
-        }
-      }
-      
-      return null;
+    function extractVideoID(url) {
+      const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
     }
 
-    function loadVideo(index) {
-      currentIndex = index;
-      player.loadVideoById(playlist[currentIndex]);
+    function loadPlaylist() {
+      const input = document.getElementById("youtubeUrls").value.trim();
+      const lines = input.split('\n');
+      playlist = lines.map(line => extractVideoID(line.trim())).filter(Boolean);
+
+      if (playlist.length === 0) {
+        alert("請輸入有效的 YouTube 影片連結！");
+        return;
+      }
+
+      currentIndex = 0;
+      if (player) {
+        player.loadVideoById(playlist[currentIndex]);
+      }
+      fetchVideoTitle(playlist[currentIndex]);
       updatePlaylistUI();
     }
 
-    function nextVideo() {
+    function playCurrentVideo() {
       if (playlist.length === 0) return;
-      currentIndex++;
-      if (currentIndex >= playlist.length) {
-        if (document.getElementById('loopPlaylist').checked) {
-          shuffleIfNeeded();
-          currentIndex = 0;
-        } else return;
+      if (player) {
+        player.loadVideoById(playlist[currentIndex]);
+        fetchVideoTitle(playlist[currentIndex]);
+        updatePlaylistUI();
       }
-      loadVideo(currentIndex);
+    }
+
+    function fetchVideoTitle(videoID) {
+      if (videoTitles[videoID]) {
+        document.getElementById("currentTitle").textContent = `目前播放：${videoTitles[videoID]}`;
+        return;
+      }
+
+      fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
+        .then(res => res.json())
+        .then(data => {
+          const title = data.title || "未知標題";
+          videoTitles[videoID] = title;
+          document.getElementById("currentTitle").textContent = `目前播放：${title}`;
+          updatePlaylistUI();
+        })
+        .catch(() => {
+          videoTitles[videoID] = videoID;
+          document.getElementById("currentTitle").textContent = `目前播放：${videoID}`;
+        });
     }
 
     function prevVideo() {
       if (playlist.length === 0) return;
       currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-      loadVideo(currentIndex);
+      playCurrentVideo();
     }
 
-    function shuffleIfNeeded() {
-      if (document.getElementById('shuffleMode').checked) {
-        playlist = shuffleArray(playlist);
-        updatePlaylistUI();
-      }
+    function nextVideo() {
+      if (playlist.length === 0) return;
+      currentIndex = (currentIndex + 1) % playlist.length;
+      playCurrentVideo();
     }
 
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        if (document.getElementById('loopSingle').checked) {
-          player.playVideo();
-        } else {
-          nextVideo();
-        }
-      }
+    function removeCurrent() {
+      if (playlist.length === 0) return;
+      const removed = playlist.splice(currentIndex, 1)[0];
+      delete videoTitles[removed];
+      if (currentIndex >= playlist.length) currentIndex = 0;
+      playCurrentVideo();
+      updatePlaylistUI();
     }
-
-    // function updatePlaylistUI() {
-    //   const ul = document.getElementById('playlist');
-    //   ul.innerHTML = '';
-    //   playlist.forEach((id, index) => {
-    //     const li = document.createElement('li');
-    //     li.textContent = `#${index + 1}: ${id}`;
-    //     li.draggable = true;
-    //     li.className = index === currentIndex ? 'playing' : '';
-
-    //     li.addEventListener('dragstart', (e) => {
-    //       e.dataTransfer.setData('text/plain', index);
-    //     });
-
-    //     li.addEventListener('drop', (e) => {
-    //       e.preventDefault();
-    //       const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
-    //       const toIndex = index;
-    //       const [moved] = playlist.splice(fromIndex, 1);
-    //       playlist.splice(toIndex, 0, moved);
-    //       updatePlaylistUI();
-    //     });
-
-    //     const removeBtn = document.createElement('button');
-    //     removeBtn.textContent = '✕';
-    //     removeBtn.onclick = () => {
-    //       playlist.splice(index, 1);
-    //       if (index === currentIndex && playlist.length > 0) {
-    //         loadVideo(currentIndex % playlist.length);
-    //       } else if (playlist.length === 0) {
-    //         player.stopVideo();
-    //       } else if (index < currentIndex) {
-    //         currentIndex--;
-    //       }
-    //       updatePlaylistUI();
-    //     };
-    //     li.appendChild(removeBtn);
-    //     ul.appendChild(li);
-    //   });
-    // }
 
     function updatePlaylistUI() {
       const ul = document.getElementById('playlist');
@@ -289,19 +213,12 @@
         li.draggable = true;
         li.className = index === currentIndex ? 'playing' : '';
 
-        if (videoTitles[id]) {
-          li.textContent = `#${index + 1}: ${videoTitles[id]}`;
-        } else {
-          li.textContent = `#${index + 1}: 讀取中...`;
+        li.textContent = `#${index + 1}: ${videoTitles[id] || "讀取中..."}`;
+        if (!videoTitles[id]) {
           fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`)
             .then(res => res.json())
             .then(data => {
-              const title = data.title || id;
-              videoTitles[id] = title;
-              updatePlaylistUI();
-            })
-            .catch(() => {
-              videoTitles[id] = id;
+              videoTitles[id] = data.title || id;
               updatePlaylistUI();
             });
         }
@@ -347,36 +264,39 @@
       });
     }
 
-
-    function loadPlaylist() {
-      const input = document.getElementById("youtubeUrls").value.trim();
-      const lines = input.split('\n');
-      playlist = lines.map(line => extractVideoID(line.trim())).filter(Boolean);
-
-      if (playlist.length === 0) {
-        alert("請輸入有效的 YouTube 影片連結！");
-        return;
-      }
-
-      currentIndex = 0;
-      playCurrentVideo();
-      updatePlaylistUI();
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('youtubePlayer', {
+        height: '405',
+        width: '720',
+        videoId: '',
+        events: {
+          'onReady': () => {},
+          'onStateChange': onPlayerStateChange
+        }
+      });
     }
 
-    function playCurrentVideo() {
-      if (playlist.length === 0) {
-        document.getElementById("currentTitle").textContent = "目前播放：播放清單為空";
-        document.getElementById("youtubePlayer").src = "";
-        return;
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        if (loopSingle) {
+          player.seekTo(0);
+          player.playVideo();
+        } else if (currentIndex + 1 < playlist.length) {
+          currentIndex++;
+          playCurrentVideo();
+        } else if (loopPlaylist) {
+          currentIndex = 0;
+          playCurrentVideo();
+        } else {
+          document.getElementById("currentTitle").textContent = "已播放完清單";
+        }
       }
-
-      const videoID = playlist[currentIndex];
-      const iframe = document.getElementById("youtubePlayer");
-      iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1&enablejsapi=1&rel=0`;
-
-      fetchVideoTitle(videoID);
-      updatePlaylistUI();
     }
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   </script>
+
 </body>
 </html>
