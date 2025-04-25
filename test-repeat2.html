@@ -83,6 +83,12 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
+    .checkbox-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -99,11 +105,13 @@
     <button onclick="prevVideo()">⏮ 上一部</button>
     <button onclick="nextVideo()">⏭ 下一部</button>
     <button onclick="removeCurrent()">🗑 移除當前影片</button>
-    <label><input type="checkbox" id="loopSingle">🔂 單曲循環</label>
-    <label><input type="checkbox" id="loopPlaylist" checked>🔁 播放清單循環</label>
+    
+    <div class="checkbox-group">
+        <label><input type="checkbox" id="loopSingle">🔂 單曲循環</label>
+        <label><input type="checkbox" id="loopPlaylist" checked>🔁 播放清單循環</label>
+    </div>
     <!-- <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button> -->
     <!-- <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button> -->
-    id="loopSingle"
   </div>
 
   <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
