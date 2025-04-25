@@ -1,146 +1,374 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
- <meta charset="UTF-8">
- <title>YouTube 單曲循環播放器</title>
- <style>
-  body {
-   font-family: sans-serif;
-   background-color: #121212;
-   color: #e0e0e0;
-   text-align: center;
-   padding: 30px;
-  }
-  h1 {
-   color: #ffffff;
-  }
-  textarea {
-   background-color: #1e1e1e;
-   color: #e0e0e0;
-   border: 1px solid #333;
-   font-size: 16px;
-   padding: 10px;
-   margin: 10px;
-   width: 80%;
-   resize: none; /* 移除垂直縮放 */
-  }
-  button {
-   background-color: #333;
-   color: #fff;
-   border: 1px solid #555;
-   border-radius: 6px;
-   padding: 10px 15px;
-   margin: 8px;
-   cursor: pointer;
-   transition: background-color 0.2s;
-  }
-  button:hover {
-   background-color: #555;
-  }
-  iframe {
-   margin-top: 20px;
-   width: 720px;
-   height: 405px;
-   border: 2px solid #444;
-   background-color: black;
-  }
-  #currentTitle {
-   font-size: 20px;
-   font-weight: bold;
-   margin-top: 20px;
-   color: #ffffff;
-  }
- </style>
+  <meta charset="UTF-8">
+  <title>YouTube 播放清單播放器</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #ffffff;
+    }
+    textarea {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      resize: vertical;
+    }
+    button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 720px;
+      height: 405px;
+      border: 2px solid #444;
+      background-color: black;
+    }
+    #currentTitle {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #ffffff;
+    }
+    .controls button {
+      margin: 5px;
+    }
+    ul#playlist {
+      list-style: none;
+      padding: 0;
+      max-width: 720px;
+      margin: auto;
+      text-align: left;
+    }
+    ul#playlist li {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      margin: 4px 0;
+      padding: 8px 10px;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul#playlist li.playing {
+      background: #333;
+      font-weight: bold;
+    }
+    ul#playlist button {
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
- <h1>YouTube 單曲循環播放器</h1>
- <p>請輸入 YouTube 影片連結</p>
+  <h1>YouTube 播放清單播放器</h1>
+  <p>請輸入多個 YouTube 影片連結，每行一個</p>
 
- <textarea id="youtubeUrl" rows="1" cols="60" placeholder="請輸入 YouTube 影片連結"></textarea><br>
- <button onclick="loadVideo()">開始播放</button>
- <button onclick="toggleLoop()">🔁 循環播放：<span id="loopStatus">關</span></button>
+  <textarea id="youtubeUrls" rows="5" cols="60" placeholder="每行一個 YouTube 影片連結"></textarea><br>
+  <button onclick="loadPlaylist()">開始播放清單</button>
 
- <div id="currentTitle">目前播放：尚未開始</div>
+  <div id="currentTitle">目前播放：尚未開始</div>
 
- <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
+  <div class="controls">
+    <button onclick="prevVideo()">⏮ 上一部</button>
+    <button onclick="nextVideo()">⏭ 下一部</button>
+    <button onclick="removeCurrent()">🗑 移除當前影片</button>
+    <label><input type="checkbox" id="loopSingle">🔂 單曲循環</label>
+    <label><input type="checkbox" id="loopPlaylist" checked>🔁 播放清單循環</label>
+    <!-- <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button> -->
+    <!-- <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button> -->
+    id="loopSingle"
+  </div>
 
- <script>
-  let videoId = null;
-  let player;
-  let loopEnabled = false;
+  <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
 
-  function extractVideoID(url) {
-   const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/;
-   const match = url.match(regex);
-   return match ? match[1] : null;
-  }
+  <h2>播放清單</h2>
+  <ul id="playlist"></ul>
 
-  function loadVideo() {
-   const url = document.getElementById("youtubeUrl").value.trim();
-   videoId = extractVideoID(url);
 
-   if (!videoId) {
-    alert("請輸入有效的 YouTube 影片連結！");
-    return;
-   }
+  <script>
+    let tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
 
-   if (player) {
-    player.loadVideoById(videoId);
-   } else {
-    player = new YT.Player('youtubePlayer', {
-     height: '405',
-     width: '720',
-     videoId: videoId,
-     events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-     }
-    });
-   }
-   fetchVideoTitle(videoId);
-  }
+    let player;
+    let playlist = [];
+    let currentIndex = 0;
+    let shuffled = false;
 
-  function onPlayerReady(event) {
-   // 播放器準備就緒後可以進行操作，例如自動播放
-  }
-
-  function onPlayerStateChange(event) {
-   if (event.data === YT.PlayerState.ENDED) {
-    if (loopEnabled) {
-     event.target.playVideo(); // 循環播放
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        events: {
+          'onStateChange': onPlayerStateChange
+        }
+      });
     }
-   }
-  }
 
-  function toggleLoop() {
-   loopEnabled = !loopEnabled;
-   document.getElementById("loopStatus").textContent = loopEnabled ? "開" : "關";
-  }
+    function addVideo() {
+      const input = document.getElementById('videoId').value.trim();
+      if (input) {
+        const videoId = extractVideoId(input);
+        if (videoId) {
+          playlist.push(videoId);
+          updatePlaylistUI();
+          if (playlist.length === 1) {
+            loadVideo(currentIndex);
+          }
+          document.getElementById('videoId').value = '';
+        } else {
+          alert('Invalid YouTube URL or video ID');
+        }
+      }
+    }
 
-  function fetchVideoTitle(videoID) {
-   fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
-    .then(res => res.json())
-    .then(data => {
-     const title = data.title || "未知標題";
-     document.getElementById("currentTitle").textContent = `目前播放：${title}`;
-    })
-    .catch(() => {
-     document.getElementById("currentTitle").textContent = `目前播放：${videoID}`;
-    });
-  }
+    function extractVideoId(input) {
+      // Handle direct video IDs
+      if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
+        return input;
+      }
 
-  // 載入 YouTube IFrame Player API
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      // Handle various YouTube URL formats
+      let videoId = '';
+      
+      // Handle youtu.be format
+      if (input.includes('youtu.be/')) {
+        videoId = input.substring(input.indexOf('youtu.be/') + 9);
+      }
+      // Handle youtube.com/watch?v= format
+      else if (input.includes('youtube.com/watch')) {
+        const urlParams = new URLSearchParams(input.substring(input.indexOf('?')));
+        videoId = urlParams.get('v');
+      }
+      // Handle youtube.com/embed/ format
+      else if (input.includes('youtube.com/embed/')) {
+        videoId = input.substring(input.indexOf('embed/') + 6);
+      }
 
-  // onYouTubeIframeAPIReady 會在 API 下載完成後被呼叫
-  function onYouTubeIframeAPIReady() {
-   // 這裡 player 物件會在 loadVideo() 函式中被建立
-  }
- </script>
+      // Clean up the video ID
+      if (videoId) {
+        // Remove any additional parameters
+        if (videoId.includes('&')) {
+          videoId = videoId.substring(0, videoId.indexOf('&'));
+        }
+        // Remove any hash fragments
+        if (videoId.includes('#')) {
+          videoId = videoId.substring(0, videoId.indexOf('#'));
+        }
+        // Validate the video ID format
+        if (/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+          return videoId;
+        }
+      }
+      
+      return null;
+    }
 
+    function loadVideo(index) {
+      currentIndex = index;
+      player.loadVideoById(playlist[currentIndex]);
+      updatePlaylistUI();
+    }
+
+    function nextVideo() {
+      if (playlist.length === 0) return;
+      currentIndex++;
+      if (currentIndex >= playlist.length) {
+        if (document.getElementById('loopPlaylist').checked) {
+          shuffleIfNeeded();
+          currentIndex = 0;
+        } else return;
+      }
+      loadVideo(currentIndex);
+    }
+
+    function prevVideo() {
+      if (playlist.length === 0) return;
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadVideo(currentIndex);
+    }
+
+    function shuffleIfNeeded() {
+      if (document.getElementById('shuffleMode').checked) {
+        playlist = shuffleArray(playlist);
+        updatePlaylistUI();
+      }
+    }
+
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        if (document.getElementById('loopSingle').checked) {
+          player.playVideo();
+        } else {
+          nextVideo();
+        }
+      }
+    }
+
+    // function updatePlaylistUI() {
+    //   const ul = document.getElementById('playlist');
+    //   ul.innerHTML = '';
+    //   playlist.forEach((id, index) => {
+    //     const li = document.createElement('li');
+    //     li.textContent = `#${index + 1}: ${id}`;
+    //     li.draggable = true;
+    //     li.className = index === currentIndex ? 'playing' : '';
+
+    //     li.addEventListener('dragstart', (e) => {
+    //       e.dataTransfer.setData('text/plain', index);
+    //     });
+
+    //     li.addEventListener('drop', (e) => {
+    //       e.preventDefault();
+    //       const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+    //       const toIndex = index;
+    //       const [moved] = playlist.splice(fromIndex, 1);
+    //       playlist.splice(toIndex, 0, moved);
+    //       updatePlaylistUI();
+    //     });
+
+    //     const removeBtn = document.createElement('button');
+    //     removeBtn.textContent = '✕';
+    //     removeBtn.onclick = () => {
+    //       playlist.splice(index, 1);
+    //       if (index === currentIndex && playlist.length > 0) {
+    //         loadVideo(currentIndex % playlist.length);
+    //       } else if (playlist.length === 0) {
+    //         player.stopVideo();
+    //       } else if (index < currentIndex) {
+    //         currentIndex--;
+    //       }
+    //       updatePlaylistUI();
+    //     };
+    //     li.appendChild(removeBtn);
+    //     ul.appendChild(li);
+    //   });
+    // }
+
+    function updatePlaylistUI() {
+      const ul = document.getElementById('playlist');
+      ul.innerHTML = '';
+
+      playlist.forEach((id, index) => {
+        const li = document.createElement('li');
+        li.draggable = true;
+        li.className = index === currentIndex ? 'playing' : '';
+
+        if (videoTitles[id]) {
+          li.textContent = `#${index + 1}: ${videoTitles[id]}`;
+        } else {
+          li.textContent = `#${index + 1}: 讀取中...`;
+          fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`)
+            .then(res => res.json())
+            .then(data => {
+              const title = data.title || id;
+              videoTitles[id] = title;
+              updatePlaylistUI();
+            })
+            .catch(() => {
+              videoTitles[id] = id;
+              updatePlaylistUI();
+            });
+        }
+
+        li.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', index);
+        });
+
+        li.addEventListener('dragover', (e) => e.preventDefault());
+
+        li.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+          const toIndex = index;
+          const [moved] = playlist.splice(fromIndex, 1);
+          playlist.splice(toIndex, 0, moved);
+          if (fromIndex === currentIndex) {
+            currentIndex = toIndex;
+          } else if (fromIndex < currentIndex && toIndex >= currentIndex) {
+            currentIndex--;
+          } else if (fromIndex > currentIndex && toIndex <= currentIndex) {
+            currentIndex++;
+          }
+          updatePlaylistUI();
+        });
+
+        const removeBtn = document.createElement('button');
+        removeBtn.textContent = '✕';
+        removeBtn.onclick = (e) => {
+          e.stopPropagation();
+          playlist.splice(index, 1);
+          delete videoTitles[id];
+          if (index === currentIndex) {
+            playCurrentVideo();
+          } else if (index < currentIndex) {
+            currentIndex--;
+          }
+          updatePlaylistUI();
+        };
+
+        li.appendChild(removeBtn);
+        ul.appendChild(li);
+      });
+    }
+
+
+    function loadPlaylist() {
+      const input = document.getElementById("youtubeUrls").value.trim();
+      const lines = input.split('\n');
+      playlist = lines.map(line => extractVideoID(line.trim())).filter(Boolean);
+
+      if (playlist.length === 0) {
+        alert("請輸入有效的 YouTube 影片連結！");
+        return;
+      }
+
+      currentIndex = 0;
+      playCurrentVideo();
+      updatePlaylistUI();
+    }
+
+    function playCurrentVideo() {
+      if (playlist.length === 0) {
+        document.getElementById("currentTitle").textContent = "目前播放：播放清單為空";
+        document.getElementById("youtubePlayer").src = "";
+        return;
+      }
+
+      const videoID = playlist[currentIndex];
+      const iframe = document.getElementById("youtubePlayer");
+      iframe.src = `https://www.youtube.com/embed/${videoID}?autoplay=1&enablejsapi=1&rel=0`;
+
+      fetchVideoTitle(videoID);
+      updatePlaylistUI();
+    }
+  </script>
 </body>
 </html>
