@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+ <meta charset="UTF-8">
+ <title>YouTube 單曲循環播放器</title>
+ <style>
+  body {
+   font-family: sans-serif;
+   background-color: #121212;
+   color: #e0e0e0;
+   text-align: center;
+   padding: 30px;
+  }
+  h1 {
+   color: #ffffff;
+  }
+  textarea {
+   background-color: #1e1e1e;
+   color: #e0e0e0;
+   border: 1px solid #333;
+   font-size: 16px;
+   padding: 10px;
+   margin: 10px;
+   width: 80%;
+   resize: none; /* 移除垂直縮放 */
+  }
+  button {
+   background-color: #333;
+   color: #fff;
+   border: 1px solid #555;
+   border-radius: 6px;
+   padding: 10px 15px;
+   margin: 8px;
+   cursor: pointer;
+   transition: background-color 0.2s;
+  }
+  button:hover {
+   background-color: #555;
+  }
+  iframe {
+   margin-top: 20px;
+   width: 720px;
+   height: 405px;
+   border: 2px solid #444;
+   background-color: black;
+  }
+  #currentTitle {
+   font-size: 20px;
+   font-weight: bold;
+   margin-top: 20px;
+   color: #ffffff;
+  }
+ </style>
+</head>
+<body>
+
+ <h1>YouTube 單曲循環播放器</h1>
+ <p>請輸入 YouTube 影片連結</p>
+
+ <textarea id="youtubeUrl" rows="1" cols="60" placeholder="請輸入 YouTube 影片連結"></textarea><br>
+ <button onclick="loadVideo()">開始播放</button>
+ <button onclick="toggleLoop()">🔁 循環播放：<span id="loopStatus">關</span></button>
+
+ <div id="currentTitle">目前播放：尚未開始</div>
+
+ <iframe id="youtubePlayer" allow="autoplay" allowfullscreen></iframe>
+
+ <script>
+  let videoId = null;
+  let player;
+  let loopEnabled = false;
+
+  function extractVideoID(url) {
+   const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/;
+   const match = url.match(regex);
+   return match ? match[1] : null;
+  }
+
+  function loadVideo() {
+   const url = document.getElementById("youtubeUrl").value.trim();
+   videoId = extractVideoID(url);
+
+   if (!videoId) {
+    alert("請輸入有效的 YouTube 影片連結！");
+    return;
+   }
+
+   if (player) {
+    player.loadVideoById(videoId);
+   } else {
+    player = new YT.Player('youtubePlayer', {
+     height: '405',
+     width: '720',
+     videoId: videoId,
+     events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+     }
+    });
+   }
+   fetchVideoTitle(videoId);
+  }
+
+  function onPlayerReady(event) {
+   // 播放器準備就緒後可以進行操作，例如自動播放
+  }
+
+  function onPlayerStateChange(event) {
+   if (event.data === YT.PlayerState.ENDED) {
+    if (loopEnabled) {
+     event.target.playVideo(); // 循環播放
+    }
+   }
+  }
+
+  function toggleLoop() {
+   loopEnabled = !loopEnabled;
+   document.getElementById("loopStatus").textContent = loopEnabled ? "開" : "關";
+  }
+
+  function fetchVideoTitle(videoID) {
+   fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
+    .then(res => res.json())
+    .then(data => {
+     const title = data.title || "未知標題";
+     document.getElementById("currentTitle").textContent = `目前播放：${title}`;
+    })
+    .catch(() => {
+     document.getElementById("currentTitle").textContent = `目前播放：${videoID}`;
+    });
+  }
+
+  // 載入 YouTube IFrame Player API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  // onYouTubeIframeAPIReady 會在 API 下載完成後被呼叫
+  function onYouTubeIframeAPIReady() {
+   // 這裡 player 物件會在 loadVideo() 函式中被建立
+  }
+ </script>
+
+</body>
+</html>
