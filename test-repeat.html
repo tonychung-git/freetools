@@ -292,12 +292,14 @@
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
         if (loopSingle) {
-          playCurrentVideo();
+          // playCurrentVideo();
+          player.playVideo();
         } else if (currentIndex + 1 < playlist.length) {
           nextVideo();
         } else if (loopPlaylist) {
           currentIndex = 0;
-          playCurrentVideo();
+          // playCurrentVideo();
+          player.playVideo();
         } else {
           document.getElementById("currentTitle").textContent = "已播放完清單";
         }
