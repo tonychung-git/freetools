@@ -33,19 +33,31 @@
       transition: background-color 0.2s;
     }
     button:hover { background-color: #555; }
-    iframe {
-      margin-top: 20px;
-      width: 720px;
-      height: 405px;
+
+    #playerContainer {
+      position: relative;
+      width: 80%;
+      max-width: 960px;
+      margin: 20px auto;
+      aspect-ratio: 16 / 9;
+    }
+    #youtubePlayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: 2px solid #444;
       background-color: black;
     }
+
     #currentTitle {
       font-size: 20px;
       font-weight: bold;
       margin-top: 20px;
       color: #ffffff;
     }
+
     .controls button { margin: 5px; }
     ul#playlist {
       list-style: none;
@@ -265,16 +277,20 @@
     }
 
     function onYouTubeIframeAPIReady() {
-      player = new YT.Player('youtubePlayer', {
-        height: '405',
-        width: '720',
-        videoId: '',
-        events: {
-          'onReady': () => {},
-          'onStateChange': onPlayerStateChange
-        }
-      });
-    }
+    player = new YT.Player('youtubePlayer', {
+      width: '100%',
+      height: '100%',
+      videoId: '',
+      playerVars: {
+        rel: 0,
+        modestbranding: 1
+      },
+      events: {
+        'onReady': () => {},
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
 
     function onPlayerStateChange(event) {
       if (event.data === YT.PlayerState.ENDED) {
