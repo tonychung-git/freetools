@@ -251,18 +251,18 @@
       loopPlaylist = !loopPlaylist;
       if (loopPlaylist && loopSingle) {
         loopSingle = false;
-        document.getElementById("loopSingleStatus").textContent = "關";
+        document.getElementById("loopSingleStatus").textContent = "Off";
       }
-      document.getElementById("loopPlaylistStatus").textContent = loopPlaylist ? "開" : "關";
+      document.getElementById("loopPlaylistStatus").textContent = loopPlaylist ? "On" : "Off";
     }
 
     function toggleLoopSingle() {
       loopSingle = !loopSingle;
       if (loopSingle && loopPlaylist) {
         loopPlaylist = false;
-        document.getElementById("loopPlaylistStatus").textContent = "關";
+        document.getElementById("loopPlaylistStatus").textContent = "Off";
       }
-      document.getElementById("loopSingleStatus").textContent = loopSingle ? "開" : "關";
+      document.getElementById("loopSingleStatus").textContent = loopSingle ? "On" : "Off";
     }
 
     function extractVideoID(url) {
