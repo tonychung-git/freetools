@@ -1,230 +1,368 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
+<!-- <head>
+  <meta charset="UTF-8">
+  <title>YouTube 播放清單播放器</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 { color: #ffffff; }
+    textarea {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      font-size: 16px;
+      padding: 10px;
+      margin: 10px;
+      width: 80%;
+      resize: vertical;
+    }
+    button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover { background-color: #555; }
+
+    #playerContainer {
+      position: relative;
+      width: 80%;
+      max-width: 960px;
+      margin: 20px auto;
+      aspect-ratio: 16 / 9;
+    }
+    #youtubePlayer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #444;
+      background-color: black;
+    }
+
+    #currentTitle {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #ffffff;
+    }
+
+    .controls button { margin: 5px; }
+    ul#playlist {
+      list-style: none;
+      padding: 0;
+      max-width: 720px;
+      margin: auto;
+      text-align: left;
+    }
+    ul#playlist li {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      margin: 4px 0;
+      padding: 8px 10px;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    ul#playlist li.playing {
+      background: #333;
+      font-weight: bold;
+    }
+    ul#playlist button {
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head> -->
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Playlist Player</title>
+  <title>YouTube 播放清單播放器</title>
   <style>
     body {
+      font-family: sans-serif;
       background-color: #121212;
-      color: #ffffff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 30px 10px;
     }
+    h1 { color: #ffffff; }
 
-    #player {
-      margin: 20px 0;
-    }
-
-    input, button, label {
-      margin: 5px;
-      background: #1f1f1f;
-      color: #fff;
-      border: 1px solid #444;
-      padding: 8px;
-      border-radius: 5px;
-    }
-
-    .controls-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 10px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .checkbox-group {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 10px;
-      margin: 10px 0;
-    }
-
-    ul {
-      list-style-type: none;
-      padding: 0;
-      width: 400px;
-    }
-
-    li {
-      background-color: #1f1f1f;
-      margin: 5px 0;
+    textarea {
+      background-color: #1e1e1e;
+      color: #e0e0e0;
+      border: 1px solid #333;
+      font-size: 16px;
       padding: 10px;
-      border-radius: 5px;
-      cursor: move;
+      margin: 10px 0;
+      width: 100%;
+      max-width: 720px;
+      resize: vertical;
+      box-sizing: border-box;
     }
 
-    .playing {
-      background-color: #333333;
+    button {
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      padding: 10px 15px;
+      margin: 8px 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    button:hover { background-color: #555; }
+
+    #playerContainer {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      margin: 20px auto 0;
+      aspect-ratio: 16 / 9;
+      background-color: black;
+      border: 2px solid #444;
+    }
+    #youtubePlayer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #currentTitle {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+      color: #ffffff;
+    }
+
+    .controls {
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .controls button {
+      margin: 5px;
+    }
+
+    ul#playlist {
+      list-style: none;
+      padding: 0;
+      max-width: 720px;
+      margin: auto;
+      text-align: left;
+    }
+    ul#playlist li {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      margin: 4px 0;
+      padding: 8px 10px;
+      cursor: move;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+    }
+    ul#playlist li.playing {
+      background: #333;
+      font-weight: bold;
+    }
+    ul#playlist button {
+      background-color: #ff4444;
+      border: none;
+      color: white;
+      padding: 4px 8px;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* ✅ 手機友善調整 */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 20px;
+      }
+      #currentTitle {
+        font-size: 16px;
+      }
+      button {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+      ul#playlist li {
+        font-size: 12px;
+        padding: 6px 8px;
+      }
     }
   </style>
-
 </head>
 
 <body>
-  <h1>YouTube Playlist Player</h1>
-  <div class="controls-container">
-    <input type="text" id="videoId" placeholder="Enter YouTube URL or Video ID">
-    <button onclick="addVideo()">Add Video</button>
-    <div class="checkbox-group">
-      <label><input type="checkbox" id="loopSingle"> Loop Single Video</label>
-      <label><input type="checkbox" id="loopPlaylist" checked> Loop Playlist</label>
-      <!-- <label><input type="checkbox" id="shuffleMode"> Shuffle Mode</label> -->
-    </div>
+
+  <h1>YouTube 播放清單播放器</h1>
+  <p>請輸入多個 YouTube 影片連結，每行一個</p>
+
+  <textarea id="youtubeUrls" rows="5" cols="60" placeholder="每行一個 YouTube 影片連結"></textarea><br>
+  <button onclick="loadPlaylist()">開始播放清單</button>
+
+  <div id="currentTitle">目前播放：尚未開始</div>
+
+  <div class="controls">
+    <button onclick="prevVideo()">⏮ 上一部</button>
+    <button onclick="nextVideo()">⏭ 下一部</button>
+    <button onclick="removeCurrent()">🗑 移除當前影片</button>
+    <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">關</span></button>
+    <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">關</span></button>
   </div>
 
-  <div id="player"></div>
-
-  <div class="nav-buttons">
-    <button onclick="prevVideo()">Previous</button>
-    <button onclick="nextVideo()">Next</button>
+  <div id="playerContainer">
+    <div id="youtubePlayer"></div>
   </div>
 
-  <h3>Playlist</h3>
-  <ul id="playlist" ondragover="event.preventDefault()"></ul>
+  <h2>播放清單</h2>
+  <ul id="playlist"></ul>
 
   <script>
-    let tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.body.appendChild(tag);
-
-    let player;
     let playlist = [];
     let currentIndex = 0;
-    let shuffled = false;
+    let player;
+    const videoTitles = {};
+    let loopPlaylist = false;
+    let loopSingle = false;
 
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '360',
-        width: '640',
-        events: {
-          'onStateChange': onPlayerStateChange
-        }
-      });
+    function toggleLoopPlaylist() {
+      loopPlaylist = !loopPlaylist;
+      if (loopPlaylist && loopSingle) {
+        loopSingle = false;
+        document.getElementById("loopSingleStatus").textContent = "關";
+      }
+      document.getElementById("loopPlaylistStatus").textContent = loopPlaylist ? "開" : "關";
     }
 
-    function addVideo() {
-      const input = document.getElementById('videoId').value.trim();
-      if (input) {
-        const videoId = extractVideoId(input);
-        if (videoId) {
-          playlist.push(videoId);
-          updatePlaylistUI();
-          if (playlist.length === 1) {
-            loadVideo(currentIndex);
-          }
-          document.getElementById('videoId').value = '';
-        } else {
-          alert('Invalid YouTube URL or video ID');
-        }
+    function toggleLoopSingle() {
+      loopSingle = !loopSingle;
+      if (loopSingle && loopPlaylist) {
+        loopPlaylist = false;
+        document.getElementById("loopPlaylistStatus").textContent = "關";
       }
+      document.getElementById("loopSingleStatus").textContent = loopSingle ? "開" : "關";
     }
 
-    function extractVideoId(input) {
-      // Handle direct video IDs
-      if (/^[a-zA-Z0-9_-]{11}$/.test(input)) {
-        return input;
-      }
-
-      // Handle various YouTube URL formats
-      let videoId = '';
-      
-      // Handle youtu.be format
-      if (input.includes('youtu.be/')) {
-        videoId = input.substring(input.indexOf('youtu.be/') + 9);
-      }
-      // Handle youtube.com/watch?v= format
-      else if (input.includes('youtube.com/watch')) {
-        const urlParams = new URLSearchParams(input.substring(input.indexOf('?')));
-        videoId = urlParams.get('v');
-      }
-      // Handle youtube.com/embed/ format
-      else if (input.includes('youtube.com/embed/')) {
-        videoId = input.substring(input.indexOf('embed/') + 6);
-      }
-
-      // Clean up the video ID
-      if (videoId) {
-        // Remove any additional parameters
-        if (videoId.includes('&')) {
-          videoId = videoId.substring(0, videoId.indexOf('&'));
-        }
-        // Remove any hash fragments
-        if (videoId.includes('#')) {
-          videoId = videoId.substring(0, videoId.indexOf('#'));
-        }
-        // Validate the video ID format
-        if (/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
-          return videoId;
-        }
-      }
-      
-      return null;
+    function extractVideoID(url) {
+      const regex = /(?:youtube\.com\/.*v=|youtu\.be\/)([^&?/]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
     }
 
-    function loadVideo(index) {
-      currentIndex = index;
-      player.loadVideoById(playlist[currentIndex]);
+    function loadPlaylist() {
+      const input = document.getElementById("youtubeUrls").value.trim();
+      const lines = input.split('\n');
+      playlist = lines.map(line => extractVideoID(line.trim())).filter(Boolean);
+
+      if (playlist.length === 0) {
+        alert("請輸入有效的 YouTube 影片連結！");
+        return;
+      }
+
+      currentIndex = 0;
+      if (player) {
+        player.loadVideoById(playlist[currentIndex]);
+      }
+      fetchVideoTitle(playlist[currentIndex]);
       updatePlaylistUI();
     }
 
-    function nextVideo() {
+    function playCurrentVideo() {
       if (playlist.length === 0) return;
-      currentIndex++;
-      if (currentIndex >= playlist.length) {
-        if (document.getElementById('loopPlaylist').checked) {
-          shuffleIfNeeded();
-          currentIndex = 0;
-        } else return;
+      if (player) {
+        player.loadVideoById(playlist[currentIndex]);
+        fetchVideoTitle(playlist[currentIndex]);
+        updatePlaylistUI();
       }
-      loadVideo(currentIndex);
+    }
+
+    function fetchVideoTitle(videoID) {
+      if (videoTitles[videoID]) {
+        document.getElementById("currentTitle").textContent = `目前播放：${videoTitles[videoID]}`;
+        return;
+      }
+
+      fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
+        .then(res => res.json())
+        .then(data => {
+          const title = data.title || "未知標題";
+          videoTitles[videoID] = title;
+          document.getElementById("currentTitle").textContent = `目前播放：${title}`;
+          updatePlaylistUI();
+        })
+        .catch(() => {
+          videoTitles[videoID] = videoID;
+          document.getElementById("currentTitle").textContent = `目前播放：${videoID}`;
+        });
     }
 
     function prevVideo() {
       if (playlist.length === 0) return;
       currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-      loadVideo(currentIndex);
+      playCurrentVideo();
     }
 
-    function shuffleIfNeeded() {
-      if (document.getElementById('shuffleMode').checked) {
-        playlist = shuffleArray(playlist);
-        updatePlaylistUI();
-      }
+    function nextVideo() {
+      if (playlist.length === 0) return;
+      currentIndex = (currentIndex + 1) % playlist.length;
+      playCurrentVideo();
     }
 
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        if (document.getElementById('loopSingle').checked) {
-          player.playVideo();
-        } else {
-          nextVideo();
-        }
-      }
+    function removeCurrent() {
+      if (playlist.length === 0) return;
+      const removed = playlist.splice(currentIndex, 1)[0];
+      delete videoTitles[removed];
+      if (currentIndex >= playlist.length) currentIndex = 0;
+      playCurrentVideo();
+      updatePlaylistUI();
     }
 
     function updatePlaylistUI() {
       const ul = document.getElementById('playlist');
       ul.innerHTML = '';
+
       playlist.forEach((id, index) => {
         const li = document.createElement('li');
-        li.textContent = `#${index + 1}: ${id}`;
         li.draggable = true;
         li.className = index === currentIndex ? 'playing' : '';
+
+        li.textContent = `#${index + 1}: ${videoTitles[id] || "讀取中..."}`;
+        if (!videoTitles[id]) {
+          fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`)
+            .then(res => res.json())
+            .then(data => {
+              videoTitles[id] = data.title || id;
+              updatePlaylistUI();
+            });
+        }
 
         li.addEventListener('dragstart', (e) => {
           e.dataTransfer.setData('text/plain', index);
         });
+
+        li.addEventListener('dragover', (e) => e.preventDefault());
 
         li.addEventListener('drop', (e) => {
           e.preventDefault();
@@ -232,36 +370,73 @@
           const toIndex = index;
           const [moved] = playlist.splice(fromIndex, 1);
           playlist.splice(toIndex, 0, moved);
+          if (fromIndex === currentIndex) {
+            currentIndex = toIndex;
+          } else if (fromIndex < currentIndex && toIndex >= currentIndex) {
+            currentIndex--;
+          } else if (fromIndex > currentIndex && toIndex <= currentIndex) {
+            currentIndex++;
+          }
           updatePlaylistUI();
         });
 
         const removeBtn = document.createElement('button');
         removeBtn.textContent = '✕';
-        removeBtn.onclick = () => {
+        removeBtn.onclick = (e) => {
+          e.stopPropagation();
           playlist.splice(index, 1);
-          if (index === currentIndex && playlist.length > 0) {
-            loadVideo(currentIndex % playlist.length);
-          } else if (playlist.length === 0) {
-            player.stopVideo();
+          delete videoTitles[id];
+          if (index === currentIndex) {
+            playCurrentVideo();
           } else if (index < currentIndex) {
             currentIndex--;
           }
           updatePlaylistUI();
         };
+
         li.appendChild(removeBtn);
         ul.appendChild(li);
       });
     }
 
-    function shuffleArray(array) {
-      let shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtubePlayer', {
+      // width: '100%',
+      // height: '100%',
+      videoId: '',
+      playerVars: {
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1
+      },
+      events: {
+        'onReady': () => {},
+        'onStateChange': onPlayerStateChange
       }
-      return shuffled;
-    }
-  </script>
-</body>
+    });
+  }
 
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+        if (loopSingle) {
+          player.seekTo(0);
+          player.playVideo();
+        } else if (currentIndex + 1 < playlist.length) {
+          currentIndex++;
+          playCurrentVideo();
+        } else if (loopPlaylist) {
+          currentIndex = 0;
+          playCurrentVideo();
+        } else {
+          document.getElementById("currentTitle").textContent = "已播放完清單";
+        }
+      }
+    }
+
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
+  </script>
+
+</body>
 </html>
