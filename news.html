@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>新聞頁面</title>
+</head>
+<body>
+  <div id="content"></div>
+
+  <script>
+    // 模擬的新聞資料
+    const newsData = [
+      {
+        id: 1,
+        title: "新聞標題1",
+        summary: "這是新聞摘要1...",
+        content: "這是新聞詳細內容1...",
+        image: "news1.jpg"
+      },
+      {
+        id: 2,
+        title: "新聞標題2",
+        summary: "這是新聞摘要2...",
+        content: "這是新聞詳細內容2...",
+        image: "news2.jpg"
+      }
+    ];
+
+    const content = document.getElementById('content');
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+
+    if (id) {
+      // 顯示詳細內容
+      const news = newsData.find(n => n.id == id);
+      if (news) {
+        content.innerHTML = `
+          <h1>${news.title}</h1>
+          <img src="${news.image}" alt="${news.title}" width="500">
+          <p>${news.content}</p>
+          <p><a href="news.html">← 回新聞首頁</a></p>
+        `;
+      } else {
+        content.innerHTML = `<p>找不到這則新聞。</p>
+                             <p><a href="news.html">← 回新聞首頁</a></p>`;
+      }
+    } else {
+      // 顯示新聞列表（摘要）
+      let html = '<h1>新聞首頁</h1>';
+      newsData.forEach(news => {
+        html += `
+          <div style="margin-bottom: 30px;">
+            <h2>${news.title}</h2>
+            <a href="news.html?id=${news.id}">
+              <img src="${news.image}" alt="${news.title}" width="300">
+            </a>
+            <p>${news.summary}</p>
+          </div>
+        `;
+      });
+      content.innerHTML = html;
+    }
+  </script>
+</body>
+</html>
