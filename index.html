@@ -9,7 +9,8 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f9;
+      background-color: #1a1a1a;
+      color: #ffffff;
       margin: 0;
       padding: 0;
       display: flex;
@@ -20,7 +21,8 @@
     }
 
     h1 {
-      color: #333;
+      color: #ffffff;
+      text-shadow: 0 0 10px rgba(0, 122, 204, 0.5);
     }
 
     .tools {
@@ -33,15 +35,19 @@
 
     .tool-link {
       text-decoration: none;
-      background-color: #007acc;
-      color: white;
+      background-color: #2d2d2d;
+      color: #ffffff;
       padding: 15px 25px;
       border-radius: 8px;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+      border: 1px solid #3d3d3d;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .tool-link:hover {
-      background-color: #005fa3;
+      background-color: #007acc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
 
     .bio {
@@ -54,22 +60,26 @@
 
     .bio-link {
       text-decoration: none;
-      background-color: #007acc;
-      color: white;
+      background-color: #2d2d2d;
+      color: #ffffff;
       padding: 15px 25px;
       border-radius: 8px;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+      border: 1px solid #3d3d3d;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     .bio-link:hover {
-      background-color: #005fa3;
+      background-color: #007acc;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
     }
 
     footer {
       position: absolute;
       bottom: 10px;
       font-size: 0.9em;
-      color: #777;
+      color: #888;
     }
   </style>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
