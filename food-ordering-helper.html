@@ -89,6 +89,25 @@
       margin-bottom: 15px;
     }
 
+    .chinese-display {
+      background: #fff;
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .chinese-text {
+      font-size: 2em;
+      font-weight: bold;
+      color: #333;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+    }
+
     .action-buttons {
       display: flex;
       gap: 10px;
@@ -136,6 +155,14 @@
       background: #444;
     }
 
+    .menu-container {
+      display: none;
+    }
+
+    .menu-container.active {
+      display: block;
+    }
+
     @media (max-width: 600px) {
       .options-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -148,6 +175,10 @@
       .action-btn {
         width: 100%;
       }
+
+      .chinese-text {
+        font-size: 1.5em;
+      }
     }
   </style>
 </head>
@@ -158,51 +189,21 @@
     <h1>🍜 Food Ordering Helper</h1>
 
     <div class="section">
-      <div class="section-title">Main Dish</div>
+      <div class="section-title">Select Restaurant</div>
       <div class="options-grid">
-        <div class="option-btn" data-en="Beef Noodles" data-zh="牛肉麵">Beef Noodles</div>
-        <div class="option-btn" data-en="Pork Noodles" data-zh="豬肉麵">Pork Noodles</div>
-        <div class="option-btn" data-en="Chicken Noodles" data-zh="雞肉麵">Chicken Noodles</div>
-        <div class="option-btn" data-en="Vegetable Noodles" data-zh="蔬菜麵">Vegetable Noodles</div>
+        <div class="option-btn" data-restaurant="noodle-house">Noodle House</div>
+        <div class="option-btn" data-restaurant="bubble-tea">Bubble Tea Shop</div>
+        <div class="option-btn" data-restaurant="breakfast">Breakfast Shop</div>
       </div>
     </div>
 
-    <div class="section">
-      <div class="section-title">Noodle Type</div>
-      <div class="options-grid">
-        <div class="option-btn" data-en="Thin Noodles" data-zh="細麵">Thin Noodles</div>
-        <div class="option-btn" data-en="Thick Noodles" data-zh="粗麵">Thick Noodles</div>
-        <div class="option-btn" data-en="Rice Noodles" data-zh="米粉">Rice Noodles</div>
-        <div class="option-btn" data-en="Udon" data-zh="烏龍麵">Udon</div>
-      </div>
+    <div id="menuContainer" class="menu-container">
+      <!-- Menu sections will be dynamically added here -->
     </div>
 
-    <div class="section">
-      <div class="section-title">Spiciness Level</div>
-      <div class="options-grid">
-        <div class="option-btn" data-en="No Spicy" data-zh="不辣">No Spicy</div>
-        <div class="option-btn" data-en="Mild" data-zh="小辣">Mild</div>
-        <div class="option-btn" data-en="Medium" data-zh="中辣">Medium</div>
-        <div class="option-btn" data-en="Hot" data-zh="大辣">Hot</div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title">Extras</div>
-      <div class="options-grid">
-        <div class="option-btn" data-en="Extra Meat" data-zh="加肉">Extra Meat</div>
-        <div class="option-btn" data-en="Extra Vegetables" data-zh="加菜">Extra Vegetables</div>
-        <div class="option-btn" data-en="Extra Noodles" data-zh="加麵">Extra Noodles</div>
-        <div class="option-btn" data-en="Extra Soup" data-zh="加湯">Extra Soup</div>
-      </div>
-    </div>
-
-    <div class="order-summary">
-      <div class="summary-title">Your Order (English)</div>
-      <div class="summary-content" id="englishSummary">No items selected</div>
-      
-      <div class="summary-title">給店員看 (Chinese)</div>
-      <div class="summary-content" id="chineseSummary">尚未選擇項目</div>
+    <div class="chinese-display">
+      <div class="summary-title">給店員看 (Show to Staff)</div>
+      <div class="chinese-text" id="chineseSummary">尚未選擇項目</div>
     </div>
 
     <div class="action-buttons">
@@ -212,89 +213,208 @@
   </div>
 
   <script>
-    const sections = document.querySelectorAll('.section');
-    let selectedOptions = {
-      main: null,
-      noodle: null,
-      spicy: null,
-      extras: []
+    const restaurantMenus = {
+      'noodle-house': {
+        sections: [
+          {
+            title: 'Main Dish',
+            options: [
+              { en: 'Beef Noodles', zh: '牛肉麵' },
+              { en: 'Pork Noodles', zh: '豬肉麵' },
+              { en: 'Chicken Noodles', zh: '雞肉麵' },
+              { en: 'Vegetable Noodles', zh: '蔬菜麵' }
+            ]
+          },
+          {
+            title: 'Noodle Type',
+            options: [
+              { en: 'Thin Noodles', zh: '細麵' },
+              { en: 'Thick Noodles', zh: '粗麵' },
+              { en: 'Rice Noodles', zh: '米粉' },
+              { en: 'Udon', zh: '烏龍麵' }
+            ]
+          },
+          {
+            title: 'Spiciness Level',
+            options: [
+              { en: 'No Spicy', zh: '不辣' },
+              { en: 'Mild', zh: '小辣' },
+              { en: 'Medium', zh: '中辣' },
+              { en: 'Hot', zh: '大辣' }
+            ]
+          },
+          {
+            title: 'Extras',
+            options: [
+              { en: 'Extra Meat', zh: '加肉' },
+              { en: 'Extra Vegetables', zh: '加菜' },
+              { en: 'Extra Noodles', zh: '加麵' },
+              { en: 'Extra Soup', zh: '加湯' }
+            ]
+          }
+        ]
+      },
+      'bubble-tea': {
+        sections: [
+          {
+            title: 'Drink Type',
+            options: [
+              { en: 'Milk Tea', zh: '奶茶' },
+              { en: 'Green Tea', zh: '綠茶' },
+              { en: 'Black Tea', zh: '紅茶' },
+              { en: 'Fruit Tea', zh: '水果茶' }
+            ]
+          },
+          {
+            title: 'Toppings',
+            options: [
+              { en: 'Pearl', zh: '珍珠' },
+              { en: 'Pudding', zh: '布丁' },
+              { en: 'Grass Jelly', zh: '仙草凍' },
+              { en: 'Red Bean', zh: '紅豆' }
+            ]
+          },
+          {
+            title: 'Ice Level',
+            options: [
+              { en: 'No Ice', zh: '去冰' },
+              { en: 'Less Ice', zh: '少冰' },
+              { en: 'Normal Ice', zh: '正常冰' }
+            ]
+          },
+          {
+            title: 'Sugar Level',
+            options: [
+              { en: 'No Sugar', zh: '無糖' },
+              { en: 'Less Sugar', zh: '少糖' },
+              { en: 'Half Sugar', zh: '半糖' },
+              { en: 'Normal Sugar', zh: '正常糖' }
+            ]
+          }
+        ]
+      },
+      'breakfast': {
+        sections: [
+          {
+            title: 'Main Dish',
+            options: [
+              { en: 'Egg Sandwich', zh: '蛋三明治' },
+              { en: 'Ham Sandwich', zh: '火腿三明治' },
+              { en: 'Chicken Sandwich', zh: '雞肉三明治' },
+              { en: 'Vegetable Sandwich', zh: '蔬菜三明治' }
+            ]
+          },
+          {
+            title: 'Drinks',
+            options: [
+              { en: 'Black Coffee', zh: '黑咖啡' },
+              { en: 'Milk Coffee', zh: '牛奶咖啡' },
+              { en: 'Black Tea', zh: '紅茶' },
+              { en: 'Milk Tea', zh: '奶茶' }
+            ]
+          },
+          {
+            title: 'Extras',
+            options: [
+              { en: 'Extra Egg', zh: '加蛋' },
+              { en: 'Extra Cheese', zh: '加起司' },
+              { en: 'Extra Ham', zh: '加火腿' },
+              { en: 'Extra Vegetables', zh: '加蔬菜' }
+            ]
+          }
+        ]
+      }
     };
 
-    sections.forEach(section => {
-      const buttons = section.querySelectorAll('.option-btn');
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          const sectionType = getSectionType(section);
-          
-          if (sectionType === 'extras') {
-            button.classList.toggle('selected');
-            updateExtras();
-          } else {
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            selectedOptions[sectionType] = button;
-          }
-          
-          updateSummary();
-        });
+    let selectedRestaurant = null;
+    let selectedOptions = {};
+
+    // Restaurant selection
+    document.querySelectorAll('.section .option-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.section .option-btn').forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+        selectedRestaurant = button.dataset.restaurant;
+        loadMenu(selectedRestaurant);
       });
     });
 
-    function getSectionType(section) {
-      const title = section.querySelector('.section-title').textContent.toLowerCase();
-      if (title.includes('main')) return 'main';
-      if (title.includes('noodle')) return 'noodle';
-      if (title.includes('spiciness')) return 'spicy';
-      if (title.includes('extras')) return 'extras';
+    function loadMenu(restaurant) {
+      const menuContainer = document.getElementById('menuContainer');
+      menuContainer.innerHTML = '';
+      selectedOptions = {};
+
+      restaurantMenus[restaurant].sections.forEach(section => {
+        const sectionDiv = document.createElement('div');
+        sectionDiv.className = 'section';
+        
+        const sectionTitle = document.createElement('div');
+        sectionTitle.className = 'section-title';
+        sectionTitle.textContent = section.title;
+        sectionDiv.appendChild(sectionTitle);
+
+        const optionsGrid = document.createElement('div');
+        optionsGrid.className = 'options-grid';
+
+        section.options.forEach(option => {
+          const button = document.createElement('div');
+          button.className = 'option-btn';
+          button.dataset.en = option.en;
+          button.dataset.zh = option.zh;
+          button.textContent = option.en;
+
+          button.addEventListener('click', () => {
+            const sectionType = section.title.toLowerCase().replace(/\s+/g, '_');
+            
+            if (section.title === 'Extras' || section.title === 'Toppings') {
+              button.classList.toggle('selected');
+              updateExtras(sectionType);
+            } else {
+              optionsGrid.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
+              button.classList.add('selected');
+              selectedOptions[sectionType] = button;
+            }
+            
+            updateSummary();
+          });
+
+          optionsGrid.appendChild(button);
+        });
+
+        sectionDiv.appendChild(optionsGrid);
+        menuContainer.appendChild(sectionDiv);
+      });
+
+      menuContainer.classList.add('active');
+      updateSummary();
     }
 
-    function updateExtras() {
-      selectedOptions.extras = Array.from(document.querySelectorAll('.section:last-child .option-btn.selected'));
+    function updateExtras(sectionType) {
+      selectedOptions[sectionType] = Array.from(
+        document.querySelectorAll(`.section:has(.section-title:contains('${sectionType}')) .option-btn.selected`)
+      );
     }
 
     function updateSummary() {
-      const englishParts = [];
       const chineseParts = [];
 
-      if (selectedOptions.main) {
-        englishParts.push(selectedOptions.main.dataset.en);
-        chineseParts.push(selectedOptions.main.dataset.zh);
-      }
-
-      if (selectedOptions.noodle) {
-        englishParts.push(selectedOptions.noodle.dataset.en);
-        chineseParts.push(selectedOptions.noodle.dataset.zh);
-      }
-
-      if (selectedOptions.spicy) {
-        englishParts.push(selectedOptions.spicy.dataset.en);
-        chineseParts.push(selectedOptions.spicy.dataset.zh);
-      }
-
-      selectedOptions.extras.forEach(extra => {
-        englishParts.push(extra.dataset.en);
-        chineseParts.push(extra.dataset.zh);
+      Object.entries(selectedOptions).forEach(([sectionType, option]) => {
+        if (Array.isArray(option)) {
+          option.forEach(opt => chineseParts.push(opt.dataset.zh));
+        } else if (option) {
+          chineseParts.push(option.dataset.zh);
+        }
       });
 
-      document.getElementById('englishSummary').textContent = 
-        englishParts.length > 0 ? englishParts.join(', ') : 'No items selected';
-      
       document.getElementById('chineseSummary').textContent = 
         chineseParts.length > 0 ? chineseParts.join('，') : '尚未選擇項目';
     }
 
     function clearOrder() {
-      selectedOptions = {
-        main: null,
-        noodle: null,
-        spicy: null,
-        extras: []
-      };
-      
+      selectedOptions = {};
       document.querySelectorAll('.option-btn').forEach(btn => {
         btn.classList.remove('selected');
       });
-      
       updateSummary();
     }
 
