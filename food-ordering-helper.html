@@ -223,11 +223,6 @@
 
       Object.entries(selectedOptions).forEach(([sectionType, options]) => {
         if (options && options.length > 0) {
-          const sectionTitle = sectionType.split('_').map(word => 
-            word.charAt(0).toUpperCase() + word.slice(1)
-          ).join(' ');
-          
-          chineseParts.push(`${sectionTitle}：`);
           options.forEach(option => {
             chineseParts.push(option.dataset.zh);
           });
