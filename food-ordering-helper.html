@@ -6,6 +6,43 @@
   <title>Food Ordering Helper</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .restaurant-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .restaurant-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .restaurant-option.selected {
+      background: #e3f2fd;
+      border: 2px solid #2196f3;
+    }
+
+    .restaurant-image {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .restaurant-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
   <a href="https://freetools.uk" class="homebtn">🔧 FreeTools.uk</a>
@@ -16,9 +53,18 @@
     <div class="card">
       <div class="section-title">Select Restaurant</div>
       <div class="grid">
-        <div class="option-btn" data-restaurant="noodle-house">Noodle House</div>
-        <div class="option-btn" data-restaurant="bubble-tea">Bubble Tea Shop</div>
-        <div class="option-btn" data-restaurant="breakfast">Breakfast Shop</div>
+        <div class="restaurant-option" data-restaurant="noodle-house">
+          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=400&auto=format&fit=crop&q=60" alt="Noodle House" class="restaurant-image">
+          <div class="restaurant-name">Noodle House</div>
+        </div>
+        <div class="restaurant-option" data-restaurant="bubble-tea">
+          <img src="https://images.unsplash.com/photo-1558857563-7d3f1b5a0e97?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
+          <div class="restaurant-name">Bubble Tea Shop</div>
+        </div>
+        <div class="restaurant-option" data-restaurant="breakfast">
+          <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
+          <div class="restaurant-name">Breakfast Shop</div>
+        </div>
       </div>
     </div>
 
@@ -155,11 +201,11 @@
     let selectedOptions = {};
 
     // Restaurant selection
-    document.querySelectorAll('.option-btn[data-restaurant]').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.option-btn[data-restaurant]').forEach(btn => btn.classList.remove('selected'));
-        button.classList.add('selected');
-        selectedRestaurant = button.dataset.restaurant;
+    document.querySelectorAll('.restaurant-option').forEach(option => {
+      option.addEventListener('click', () => {
+        document.querySelectorAll('.restaurant-option').forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
+        selectedRestaurant = option.dataset.restaurant;
         loadMenu(selectedRestaurant);
       });
     });
