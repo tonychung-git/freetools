@@ -42,6 +42,19 @@
       font-weight: bold;
       color: #333;
     }
+
+    .restaurant-category {
+      margin-bottom: 20px;
+    }
+
+    .category-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #333;
+      margin: 15px 0;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #e0e0e0;
+    }
   </style>
 </head>
 <body>
@@ -52,18 +65,34 @@
 
     <div class="card">
       <div class="section-title">Select Restaurant</div>
-      <div class="grid">
-        <div class="restaurant-option" data-restaurant="noodle-house">
-          <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House" class="restaurant-image">
-          <div class="restaurant-name">Noodle House</div>
+      
+      <div class="restaurant-category">
+        <div class="category-title">Noodle House</div>
+        <div class="grid">
+          <div class="restaurant-option" data-restaurant="noodle-house">
+            <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House" class="restaurant-image">
+            <div class="restaurant-name">Noodle House</div>
+          </div>
         </div>
-        <div class="restaurant-option" data-restaurant="bubble-tea">
-          <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
-          <div class="restaurant-name">Bubble Tea Shop</div>
+      </div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Bubble Tea Shop</div>
+        <div class="grid">
+          <div class="restaurant-option" data-restaurant="bubble-tea">
+            <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
+            <div class="restaurant-name">Bubble Tea Shop</div>
+          </div>
         </div>
-        <div class="restaurant-option" data-restaurant="breakfast">
-          <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
-          <div class="restaurant-name">Breakfast Shop</div>
+      </div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Breakfast Shop</div>
+        <div class="grid">
+          <div class="restaurant-option" data-restaurant="breakfast">
+            <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
+            <div class="restaurant-name">Breakfast Shop</div>
+          </div>
         </div>
       </div>
     </div>
