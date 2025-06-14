@@ -366,13 +366,17 @@
           button.addEventListener('click', () => {
             const sectionType = section.title.toLowerCase().replace(/\s+/g, '_');
             
-            if (section.title === 'Extras' || section.title === 'Toppings') {
-              button.classList.toggle('selected');
-              updateExtras(sectionType);
+            // Allow multiple selections for all sections
+            button.classList.toggle('selected');
+            
+            if (!selectedOptions[sectionType]) {
+              selectedOptions[sectionType] = [];
+            }
+            
+            if (button.classList.contains('selected')) {
+              selectedOptions[sectionType].push(button);
             } else {
-              optionsGrid.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('selected'));
-              button.classList.add('selected');
-              selectedOptions[sectionType] = button;
+              selectedOptions[sectionType] = selectedOptions[sectionType].filter(btn => btn !== button);
             }
             
             updateSummary();
@@ -389,20 +393,18 @@
       updateSummary();
     }
 
-    function updateExtras(sectionType) {
-      selectedOptions[sectionType] = Array.from(
-        document.querySelectorAll(`.section:has(.section-title:contains('${sectionType}')) .option-btn.selected`)
-      );
-    }
-
     function updateSummary() {
       const chineseParts = [];
 
-      Object.entries(selectedOptions).forEach(([sectionType, option]) => {
-        if (Array.isArray(option)) {
-          option.forEach(opt => chineseParts.push(opt.dataset.zh));
-        } else if (option) {
-          chineseParts.push(option.dataset.zh);
+      Object.entries(selectedOptions).forEach(([sectionType, options]) => {
+        if (options && options.length > 0) {
+          const sectionTitle = document.querySelector(`.section-title:contains('${sectionType.replace(/_/g, ' ')}')`)?.textContent;
+          if (sectionTitle) {
+            chineseParts.push(`${sectionTitle}：`);
+          }
+          options.forEach(option => {
+            chineseParts.push(option.dataset.zh);
+          });
         }
       });
 
