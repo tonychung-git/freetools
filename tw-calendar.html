@@ -97,13 +97,13 @@
     </div>
     <div class="calendar-body">
       <div class="calendar-body-row">
-        <div class="calendar-body-cell header">日</div>
-        <div class="calendar-body-cell header">一</div>
-        <div class="calendar-body-cell header">二</div>
-        <div class="calendar-body-cell header">三</div>
-        <div class="calendar-body-cell header">四</div>
-        <div class="calendar-body-cell header">五</div>
-        <div class="calendar-body-cell header">六</div>
+        <div class="calendar-body-cell header">Sun</div>
+        <div class="calendar-body-cell header">Mon</div>
+        <div class="calendar-body-cell header">Tue</div>
+        <div class="calendar-body-cell header">Wed</div>
+        <div class="calendar-body-cell header">Thu</div>
+        <div class="calendar-body-cell header">Fri</div>
+        <div class="calendar-body-cell header">Sat</div>
       </div>
       <div id="calendar-grid"></div>
     </div>
@@ -115,8 +115,8 @@
       calendarGrid.innerHTML = '';
       
       const months = [
-        '一月', '二月', '三月', '四月', '五月', '六月',
-        '七月', '八月', '九月', '十月', '十一月', '十二月'
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
       ];
       
       months.forEach((month, monthIndex) => {
