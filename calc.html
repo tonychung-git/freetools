@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -104,12 +104,12 @@
       <button class="btn" onclick="append('.')">.</button>
       <button class="btn operator" onclick="append('+')">+</button>
 
-      <button class="btn" style="grid-column: span 2; background-color: #d32f2f;" onclick="clearDisplay()">清除</button>
+      <button class="btn" style="grid-column: span 2; background-color: #d32f2f;" onclick="clearDisplay()">Clear</button>
       <button class="btn" style="grid-column: span 2" onclick="calculate()">=</button>
     </div>
   </div>
 
-  <a class="back-link" href="index.html">← 回首頁</a>
+  <a class="back-link" href="index.html">← Back to Home</a>
 
   <script>
     let display = document.getElementById('display');
@@ -126,7 +126,7 @@
       try {
         display.value = eval(display.value);
       } catch (e) {
-        display.value = '錯誤';
+        display.value = 'Error';
       }
     }
   </script>

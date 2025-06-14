@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -227,7 +227,7 @@
       taiwanHolidays.forEach(holiday => {
         const li = document.createElement('li');
         const date = new Date(holiday.date);
-        li.textContent = `${date.toLocaleDateString('zh-TW')} - ${holiday.name}`;
+        li.textContent = `${date.toLocaleDateString('en-US')} - ${holiday.name}`;
         holidayList.appendChild(li);
       });
     }
