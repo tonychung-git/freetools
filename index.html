@@ -5,107 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Freetools.uk - Free Tools</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔧</text></svg>">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #1a1a1a;
-      color: #ffffff;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 80vh;
-    }
-
-    h1 {
-      color: #ffffff;
-      /* text-shadow: 0 0 10px rgba(0, 122, 204, 0.5); */
-    }
-
-    .tools {
-      margin-top: 20px;
-      display: flex;
+    /* Additional styles specific to index page */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .tool-link {
-      text-decoration: none;
-      background-color: #2d2d2d;
-      color: #ffffff;
-      padding: 15px 25px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      border: 1px solid #3d3d3d;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .tool-link:hover {
-      background-color: #007acc;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .bio {
       margin-top: 20px;
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
     }
 
-    .bio-link {
+    .tool-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
       text-decoration: none;
-      background-color: #2d2d2d;
-      color: #ffffff;
-      padding: 15px 25px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      border: 1px solid #3d3d3d;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      color: #333;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .bio-link:hover {
-      background-color: #007acc;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    .tool-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 
-    footer {
-      position: absolute;
-      bottom: 10px;
+    .tool-icon {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    .tool-title {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .tool-description {
       font-size: 0.9em;
-      color: #888;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      .tools-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 </head>
 <body>
-  <h1>🔧 FreeTools.uk</h1>
-  <h2>Some tools I think are useful.</h2>
-  <div class="tools">
-    <a class="tool-link" href="https://lurl.cc/" target="_blank">🔗 URL Shortener</a>
-    <!-- <a class="tool-link" href="https://drive.freetools.uk" target="_blank">📁 Drive Tools</a> -->
-    <!-- <a class="tool-link" href="https://drive.freetools.uk/photos" target="_blank">🏞️ Photo Album</a> -->
-    <a class="tool-link" href="yt-player.html" target="_blank">🎬 YouTube Playlist Player</a>
-    <!-- <a class="tool-link" href="pub-album.html" target="_blank">🏞️ Google Photos Embed Converter</a> -->
-    <a class="tool-link" href="calc.html" target="_blank">🧮 Calculator</a>
-    <a class="tool-link" href="tw-calendar.html" target="_blank">🗓️ Taiwan Calendar</a>
-    <a class="tool-link" href="https://www.mvdis.gov.tw/m3-simulator-drv/index" target="_blank">🚗 Driver License Online practice theory test system</a>
-    <a class="tool-link" href="food-ordering-helper.html" target="_blank">🍜 Food Ordering Helper</a>
+  <div class="container">
+    <h1>🔧 FreeTools.uk</h1>
+    
+    <div class="tools-grid">
+      <a href="calc.html" class="tool-card">
+        <div class="tool-icon">🧮</div>
+        <div class="tool-title">Calculator</div>
+        <div class="tool-description">Simple calculator</div>
+      </a>
+
+      <a href="yt-player.html" class="tool-card">
+        <div class="tool-icon">🎬</div>
+        <div class="tool-title">YouTube Player</div>
+        <div class="tool-description">Play multiple YouTube videos in sequence</div>
+      </a>
+
+      <a href="tw-calendar.html" class="tool-card">
+        <div class="tool-icon">🗓️</div>
+        <div class="tool-title">Taiwan Calendar</div>
+        <div class="tool-description">Calendar with Taiwan holidays</div>
+      </a>
+
+      <a href="food-ordering-helper.html" class="tool-card">
+        <div class="tool-icon">🍜</div>
+        <div class="tool-title">Food Ordering Helper</div>
+        <div class="tool-description">Order food in Chinese restaurants</div>
+      </a>
+    </div>
   </div>
-
-  <!-- <div class="bio"> -->
-    <!-- <a class="bio-link" href="https://tonychung.cc">🔗 Bio</a> -->
-  <!-- </div> -->
-
-  <footer>© 2025 Freetools.uk by Tony Chung</footer>
-	
-  <!--Scripts-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
 </html>

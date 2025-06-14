@@ -4,183 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Food Ordering Helper</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f9;
-      margin: 0;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .container {
-      max-width: 800px;
-      width: 100%;
-    }
-
-    h1 {
-      color: #333;
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .section {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .section-title {
-      color: #333;
-      margin-bottom: 15px;
-      font-size: 1.2em;
-      font-weight: bold;
-    }
-
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    .option-btn {
-      background: #f0f0f0;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-align: center;
-    }
-
-    .option-btn:hover {
-      background: #e0e0e0;
-    }
-
-    .option-btn.selected {
-      background: #4CAF50;
-      color: white;
-      border-color: #45a049;
-    }
-
-    .order-summary {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      margin-top: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .summary-title {
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    .summary-content {
-      background: #f9f9f9;
-      padding: 15px;
-      border-radius: 5px;
-      margin-bottom: 15px;
-    }
-
-    .chinese-display {
-      background: #fff;
-      border-radius: 10px;
-      padding: 30px;
-      margin-top: 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .chinese-text {
-      font-size: 2em;
-      font-weight: bold;
-      color: #333;
-      margin: 20px 0;
-      padding: 20px;
-      background: #f9f9f9;
-      border-radius: 10px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .action-btn {
-      background: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: background 0.3s ease;
-    }
-
-    .action-btn:hover {
-      background: #45a049;
-    }
-
-    .action-btn.secondary {
-      background: #666;
-    }
-
-    .action-btn.secondary:hover {
-      background: #555;
-    }
-
-    .homebtn {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: #333;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .homebtn:hover {
-      background: #444;
-    }
-
-    .menu-container {
-      display: none;
-    }
-
-    .menu-container.active {
-      display: block;
-    }
-
-    @media (max-width: 600px) {
-      .options-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .action-buttons {
-        flex-direction: column;
-      }
-      
-      .action-btn {
-        width: 100%;
-      }
-
-      .chinese-text {
-        font-size: 1.5em;
-      }
-    }
-  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>��</text></svg>">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a href="https://freetools.uk" class="homebtn">🔧 FreeTools.uk</a>
@@ -188,9 +13,9 @@
   <div class="container">
     <h1>🍜 Food Ordering Helper</h1>
 
-    <div class="section">
+    <div class="card">
       <div class="section-title">Select Restaurant</div>
-      <div class="options-grid">
+      <div class="grid">
         <div class="option-btn" data-restaurant="noodle-house">Noodle House</div>
         <div class="option-btn" data-restaurant="bubble-tea">Bubble Tea Shop</div>
         <div class="option-btn" data-restaurant="breakfast">Breakfast Shop</div>
@@ -202,13 +27,13 @@
     </div>
 
     <div class="chinese-display">
-      <div class="summary-title">給店員看 (Show to Staff)</div>
+      <div class="section-title">給店員看 (Show to Staff)</div>
       <div class="chinese-text" id="chineseSummary">尚未選擇項目</div>
     </div>
 
     <div class="action-buttons">
-      <button class="action-btn" onclick="clearOrder()">Clear Order</button>
-      <button class="action-btn" onclick="copyChinese()">Copy Chinese Text</button>
+      <button class="btn" onclick="clearOrder()">Clear Order</button>
+      <button class="btn" onclick="copyChinese()">Copy Chinese Text</button>
     </div>
   </div>
 
