@@ -79,6 +79,35 @@
     .calendar-body-cell.date.other-month {
       color: #ccc;
     }
+    .calendar-body-cell.date.holiday {
+      background: #ffebee;
+      color: #d32f2f;
+      font-weight: bold;
+    }
+    .holiday-list {
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+    .holiday-list h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .holiday-list ul {
+      list-style: none;
+      padding: 0;
+    }
+    .holiday-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .holiday-list li:last-child {
+      border-bottom: none;
+    }
   </style>
 </head>
 <body>
@@ -109,7 +138,26 @@
     </div>
   </div>
 
+  <div class="holiday-list">
+    <h2>Taiwan 2025 Holidays</h2>
+    <ul id="holiday-list"></ul>
+  </div>
+
   <script>
+    const taiwanHolidays = [
+      { date: '2025-01-01', name: 'New Year\'s Day' },
+      { date: '2025-02-09', name: 'Chinese New Year' },
+      { date: '2025-02-10', name: 'Chinese New Year' },
+      { date: '2025-02-11', name: 'Chinese New Year' },
+      { date: '2025-02-28', name: 'Peace Memorial Day' },
+      { date: '2025-04-04', name: 'Children\'s Day' },
+      { date: '2025-04-05', name: 'Tomb-sweeping Day' },
+      { date: '2025-05-01', name: 'Labor Day' },
+      { date: '2025-06-02', name: 'Dragon Boat Festival' },
+      { date: '2025-09-29', name: 'Mid-Autumn Festival' },
+      { date: '2025-10-10', name: 'National Day' },
+    ];
+
     function generateCalendar(year) {
       const calendarGrid = document.getElementById('calendar-grid');
       calendarGrid.innerHTML = '';
@@ -156,12 +204,31 @@
           if (dayOfWeek === 0 || dayOfWeek === 6) {
             dateCell.classList.add('weekend');
           }
+
+          // Check if the date is a holiday
+          const currentDate = new Date(year, monthIndex, day);
+          const dateString = currentDate.toISOString().split('T')[0];
+          const holiday = taiwanHolidays.find(h => h.date === dateString);
+          if (holiday) {
+            dateCell.classList.add('holiday');
+            dateCell.title = holiday.name;
+          }
           
           monthGrid.appendChild(dateCell);
         }
         
         monthDiv.appendChild(monthGrid);
         calendarGrid.appendChild(monthDiv);
+      });
+
+      // Update holiday list
+      const holidayList = document.getElementById('holiday-list');
+      holidayList.innerHTML = '';
+      taiwanHolidays.forEach(holiday => {
+        const li = document.createElement('li');
+        const date = new Date(holiday.date);
+        li.textContent = `${date.toLocaleDateString('zh-TW')} - ${holiday.name}`;
+        holidayList.appendChild(li);
       });
     }
 
