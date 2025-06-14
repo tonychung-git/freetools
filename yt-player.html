@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube 播放清單播放器</title>
+  <title>YouTube Playlist Player</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
   <!-- <link rel="stylesheet" href="styles.css"> -->
   <style>
@@ -166,27 +166,27 @@
 
 
 
-  <h1>YouTube 播放清單播放器</h1>
-  <p>請輸入多個 YouTube 影片連結，每行一個</p>
+  <h1>YouTube Playlist Player</h1>
+  <p>Please enter multiple YouTube video links, one per line</p>
 
-  <textarea id="youtubeUrls" rows="5" cols="60" placeholder="每行一個 YouTube 影片連結"></textarea><br>
-  <button onclick="loadPlaylist()">開始播放清單</button>
+  <textarea id="youtubeUrls" rows="5" cols="60" placeholder="Enter YouTube video links, one per line"></textarea><br>
+  <button onclick="loadPlaylist()">Start Playlist</button>
 
-  <div id="currentTitle">目前播放：尚未開始</div>
+  <div id="currentTitle">Currently playing: Not started</div>
 
   <div class="controls">
-    <button onclick="prevVideo()">⏮ 上一部</button>
-    <button onclick="nextVideo()">⏭ 下一部</button>
-    <button onclick="removeCurrent()">🗑 移除當前影片</button>
-    <button onclick="toggleLoopPlaylist()">🔁 播放清單循環：<span id="loopPlaylistStatus">Off</span></button>
-    <button onclick="toggleLoopSingle()">🔂 單曲循環：<span id="loopSingleStatus">Off</span></button>
+    <button onclick="prevVideo()">⏮ Previous</button>
+    <button onclick="nextVideo()">⏭ Next</button>
+    <button onclick="removeCurrent()">🗑 Remove Current</button>
+    <button onclick="toggleLoopPlaylist()">🔁 Loop Playlist: <span id="loopPlaylistStatus">Off</span></button>
+    <button onclick="toggleLoopSingle()">🔂 Loop Single: <span id="loopSingleStatus">Off</span></button>
   </div>
 
   <div id="playerContainer">
     <div id="youtubePlayer"></div>
   </div>
 
-  <h2>播放清單</h2>
+  <h2>Playlist</h2>
   <ul id="playlist"></ul>
 
   <script>
@@ -227,7 +227,7 @@
       playlist = lines.map(line => extractVideoID(line.trim())).filter(Boolean);
 
       if (playlist.length === 0) {
-        alert("請輸入有效的 YouTube 影片連結！");
+        alert("Please enter valid YouTube video links!");
         return;
       }
 
@@ -250,21 +250,21 @@
 
     function fetchVideoTitle(videoID) {
       if (videoTitles[videoID]) {
-        document.getElementById("currentTitle").textContent = `目前播放：${videoTitles[videoID]}`;
+        document.getElementById("currentTitle").textContent = `Currently playing: ${videoTitles[videoID]}`;
         return;
       }
 
       fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${videoID}`)
         .then(res => res.json())
         .then(data => {
-          const title = data.title || "未知標題";
+          const title = data.title || "Unknown title";
           videoTitles[videoID] = title;
-          document.getElementById("currentTitle").textContent = `目前播放：${title}`;
+          document.getElementById("currentTitle").textContent = `Currently playing: ${title}`;
           updatePlaylistUI();
         })
         .catch(() => {
           videoTitles[videoID] = videoID;
-          document.getElementById("currentTitle").textContent = `目前播放：${videoID}`;
+          document.getElementById("currentTitle").textContent = `Currently playing: ${videoID}`;
         });
     }
 
@@ -298,7 +298,7 @@
         li.draggable = true;
         li.className = index === currentIndex ? 'playing' : '';
 
-        li.textContent = `#${index + 1}: ${videoTitles[id] || "讀取中..."}`;
+        li.textContent = `#${index + 1}: ${videoTitles[id] || "Loading..."}`;
         if (!videoTitles[id]) {
           fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`)
             .then(res => res.json())
@@ -378,7 +378,7 @@
           currentIndex = 0;
           playCurrentVideo();
         } else {
-          document.getElementById("currentTitle").textContent = "已播放完清單";
+          document.getElementById("currentTitle").textContent = "Playlist finished";
         }
       }
     }
