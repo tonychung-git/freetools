@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering Helper</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+    }
+
+    .option-btn {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .option-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .option-btn.selected {
+      background: #4CAF50;
+      color: white;
+      border-color: #45a049;
+    }
+
+    .order-summary {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .summary-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .summary-content {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .action-btn {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s ease;
+    }
+
+    .action-btn:hover {
+      background: #45a049;
+    }
+
+    .action-btn.secondary {
+      background: #666;
+    }
+
+    .action-btn.secondary:hover {
+      background: #555;
+    }
+
+    .homebtn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .homebtn:hover {
+      background: #444;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="https://freetools.uk" class="homebtn">🔧 FreeTools.uk</a>
+
+  <div class="container">
+    <h1>🍜 Food Ordering Helper</h1>
+
+    <div class="section">
+      <div class="section-title">Main Dish</div>
+      <div class="options-grid">
+        <div class="option-btn" data-en="Beef Noodles" data-zh="牛肉麵">Beef Noodles</div>
+        <div class="option-btn" data-en="Pork Noodles" data-zh="豬肉麵">Pork Noodles</div>
+        <div class="option-btn" data-en="Chicken Noodles" data-zh="雞肉麵">Chicken Noodles</div>
+        <div class="option-btn" data-en="Vegetable Noodles" data-zh="蔬菜麵">Vegetable Noodles</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Noodle Type</div>
+      <div class="options-grid">
+        <div class="option-btn" data-en="Thin Noodles" data-zh="細麵">Thin Noodles</div>
+        <div class="option-btn" data-en="Thick Noodles" data-zh="粗麵">Thick Noodles</div>
+        <div class="option-btn" data-en="Rice Noodles" data-zh="米粉">Rice Noodles</div>
+        <div class="option-btn" data-en="Udon" data-zh="烏龍麵">Udon</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Spiciness Level</div>
+      <div class="options-grid">
+        <div class="option-btn" data-en="No Spicy" data-zh="不辣">No Spicy</div>
+        <div class="option-btn" data-en="Mild" data-zh="小辣">Mild</div>
+        <div class="option-btn" data-en="Medium" data-zh="中辣">Medium</div>
+        <div class="option-btn" data-en="Hot" data-zh="大辣">Hot</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Extras</div>
+      <div class="options-grid">
+        <div class="option-btn" data-en="Extra Meat" data-zh="加肉">Extra Meat</div>
+        <div class="option-btn" data-en="Extra Vegetables" data-zh="加菜">Extra Vegetables</div>
+        <div class="option-btn" data-en="Extra Noodles" data-zh="加麵">Extra Noodles</div>
+        <div class="option-btn" data-en="Extra Soup" data-zh="加湯">Extra Soup</div>
+      </div>
+    </div>
+
+    <div class="order-summary">
+      <div class="summary-title">Your Order (English)</div>
+      <div class="summary-content" id="englishSummary">No items selected</div>
+      
+      <div class="summary-title">給店員看 (Chinese)</div>
+      <div class="summary-content" id="chineseSummary">尚未選擇項目</div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn" onclick="clearOrder()">Clear Order</button>
+      <button class="action-btn" onclick="copyChinese()">Copy Chinese Text</button>
+    </div>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    let selectedOptions = {
+      main: null,
+      noodle: null,
+      spicy: null,
+      extras: []
+    };
+
+    sections.forEach(section => {
+      const buttons = section.querySelectorAll('.option-btn');
+      buttons.forEach(button => {
+        button.addEventListener('click', () => {
+          const sectionType = getSectionType(section);
+          
+          if (sectionType === 'extras') {
+            button.classList.toggle('selected');
+            updateExtras();
+          } else {
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            selectedOptions[sectionType] = button;
+          }
+          
+          updateSummary();
+        });
+      });
+    });
+
+    function getSectionType(section) {
+      const title = section.querySelector('.section-title').textContent.toLowerCase();
+      if (title.includes('main')) return 'main';
+      if (title.includes('noodle')) return 'noodle';
+      if (title.includes('spiciness')) return 'spicy';
+      if (title.includes('extras')) return 'extras';
+    }
+
+    function updateExtras() {
+      selectedOptions.extras = Array.from(document.querySelectorAll('.section:last-child .option-btn.selected'));
+    }
+
+    function updateSummary() {
+      const englishParts = [];
+      const chineseParts = [];
+
+      if (selectedOptions.main) {
+        englishParts.push(selectedOptions.main.dataset.en);
+        chineseParts.push(selectedOptions.main.dataset.zh);
+      }
+
+      if (selectedOptions.noodle) {
+        englishParts.push(selectedOptions.noodle.dataset.en);
+        chineseParts.push(selectedOptions.noodle.dataset.zh);
+      }
+
+      if (selectedOptions.spicy) {
+        englishParts.push(selectedOptions.spicy.dataset.en);
+        chineseParts.push(selectedOptions.spicy.dataset.zh);
+      }
+
+      selectedOptions.extras.forEach(extra => {
+        englishParts.push(extra.dataset.en);
+        chineseParts.push(extra.dataset.zh);
+      });
+
+      document.getElementById('englishSummary').textContent = 
+        englishParts.length > 0 ? englishParts.join(', ') : 'No items selected';
+      
+      document.getElementById('chineseSummary').textContent = 
+        chineseParts.length > 0 ? chineseParts.join('，') : '尚未選擇項目';
+    }
+
+    function clearOrder() {
+      selectedOptions = {
+        main: null,
+        noodle: null,
+        spicy: null,
+        extras: []
+      };
+      
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      updateSummary();
+    }
+
+    function copyChinese() {
+      const chineseText = document.getElementById('chineseSummary').textContent;
+      navigator.clipboard.writeText(chineseText).then(() => {
+        alert('Chinese text copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    }
+  </script>
+</body>
+</html>
