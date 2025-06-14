@@ -16,33 +16,157 @@
       min-height: 100vh;
       padding: 20px;
     }
+    .calendar {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 100%;
+      max-width: 800px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .calendar-header-button {
+      background: #4CAF50;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .calendar-header-button:hover {
+      background: #45a049;
+    }
+    .calendar-header-title {
+      margin: 0;
+      font-size: 24px;
+    }
+    .calendar-body-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin-bottom: 5px;
+    }
+    .calendar-body-cell {
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+    }
+    .calendar-body-cell.header {
+      font-weight: bold;
+      background: #f8f9fa;
+      border-radius: 5px;
+    }
+    .calendar-body-cell.date {
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .calendar-body-cell.date:hover {
+      background: #f0f0f0;
+    }
+    .calendar-body-cell.date.today {
+      background: #e3f2fd;
+      font-weight: bold;
+    }
+    .calendar-body-cell.date.weekend {
+      color: #ff4444;
+    }
+    .calendar-body-cell.date.other-month {
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
-  <h1>🗓️ Taiwan Calendar</h1>
+  <h1>🗓️ 台灣年曆 2025</h1>
   <div class="calendar">
     <div class="calendar-header">
       <div class="calendar-header-left">
-        <button class="calendar-header-button">Previous</button>
+        <button class="calendar-header-button">上一年</button>
       </div>
       <div class="calendar-header-center">
-        <h2 class="calendar-header-title">2025</h2>
+        <h2 class="calendar-header-title">2025年</h2>
       </div>
       <div class="calendar-header-right">
-        <button class="calendar-header-button">Next</button>
+        <button class="calendar-header-button">下一年</button>
       </div>
     </div>
     <div class="calendar-body">
       <div class="calendar-body-row">
-        <div class="calendar-body-cell">Sun</div>
-        <div class="calendar-body-cell">Mon</div>
-        <div class="calendar-body-cell">Tue</div>
-        <div class="calendar-body-cell">Wed</div>
-        <div class="calendar-body-cell">Thu</div>
-        <div class="calendar-body-cell">Fri</div>
-        <div class="calendar-body-cell">Sat</div>
+        <div class="calendar-body-cell header">日</div>
+        <div class="calendar-body-cell header">一</div>
+        <div class="calendar-body-cell header">二</div>
+        <div class="calendar-body-cell header">三</div>
+        <div class="calendar-body-cell header">四</div>
+        <div class="calendar-body-cell header">五</div>
+        <div class="calendar-body-cell header">六</div>
       </div>
+      <div id="calendar-grid"></div>
     </div>
   </div>
+
+  <script>
+    function generateCalendar(year) {
+      const calendarGrid = document.getElementById('calendar-grid');
+      calendarGrid.innerHTML = '';
+      
+      const months = [
+        '一月', '二月', '三月', '四月', '五月', '六月',
+        '七月', '八月', '九月', '十月', '十一月', '十二月'
+      ];
+      
+      months.forEach((month, monthIndex) => {
+        const monthDiv = document.createElement('div');
+        monthDiv.style.marginBottom = '30px';
+        
+        const monthTitle = document.createElement('h3');
+        monthTitle.textContent = month;
+        monthTitle.style.textAlign = 'center';
+        monthDiv.appendChild(monthTitle);
+        
+        const firstDay = new Date(year, monthIndex, 1);
+        const lastDay = new Date(year, monthIndex + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+        
+        const monthGrid = document.createElement('div');
+        monthGrid.style.display = 'grid';
+        monthGrid.style.gridTemplateColumns = 'repeat(7, 1fr)';
+        monthGrid.style.gap = '5px';
+        
+        // Add empty cells for days before the first day of the month
+        for (let i = 0; i < startingDay; i++) {
+          const emptyCell = document.createElement('div');
+          emptyCell.className = 'calendar-body-cell date other-month';
+          monthGrid.appendChild(emptyCell);
+        }
+        
+        // Add cells for each day of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dateCell = document.createElement('div');
+          dateCell.className = 'calendar-body-cell date';
+          dateCell.textContent = day;
+          
+          // Add weekend class for Saturday and Sunday
+          const dayOfWeek = (startingDay + day - 1) % 7;
+          if (dayOfWeek === 0 || dayOfWeek === 6) {
+            dateCell.classList.add('weekend');
+          }
+          
+          monthGrid.appendChild(dateCell);
+        }
+        
+        monthDiv.appendChild(monthGrid);
+        calendarGrid.appendChild(monthDiv);
+      });
+    }
+
+    // Generate calendar for 2025
+    generateCalendar(2025);
+  </script>
 </body>
 </html>
