@@ -1,96 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<!-- <head>
-  <meta charset="UTF-8">
-  <title>YouTube 播放清單播放器</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #121212;
-      color: #e0e0e0;
-      text-align: center;
-      padding: 30px;
-    }
-    h1 { color: #ffffff; }
-    textarea {
-      background-color: #1e1e1e;
-      color: #e0e0e0;
-      border: 1px solid #333;
-      font-size: 16px;
-      padding: 10px;
-      margin: 10px;
-      width: 80%;
-      resize: vertical;
-    }
-    button {
-      background-color: #333;
-      color: #fff;
-      border: 1px solid #555;
-      border-radius: 6px;
-      padding: 10px 15px;
-      margin: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-    button:hover { background-color: #555; }
-
-    #playerContainer {
-      position: relative;
-      width: 80%;
-      max-width: 960px;
-      margin: 20px auto;
-      aspect-ratio: 16 / 9;
-    }
-    #youtubePlayer {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 2px solid #444;
-      background-color: black;
-    }
-
-    #currentTitle {
-      font-size: 20px;
-      font-weight: bold;
-      margin-top: 20px;
-      color: #ffffff;
-    }
-
-    .controls button { margin: 5px; }
-    ul#playlist {
-      list-style: none;
-      padding: 0;
-      max-width: 720px;
-      margin: auto;
-      text-align: left;
-    }
-    ul#playlist li {
-      background: #1e1e1e;
-      border: 1px solid #333;
-      margin: 4px 0;
-      padding: 8px 10px;
-      cursor: move;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    ul#playlist li.playing {
-      background: #333;
-      font-weight: bold;
-    }
-    ul#playlist button {
-      background-color: #ff4444;
-      border: none;
-      color: white;
-      padding: 4px 8px;
-      font-size: 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
-</head> -->
 
 <head>
   <meta charset="UTF-8">
@@ -99,6 +8,24 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
   <!-- <link rel="stylesheet" href="styles.css"> -->
   <style>
+    /* Home button */
+    .homebtn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: #333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .homebtn:hover {
+      background: #444;
+    }
+
     body {
       font-family: sans-serif;
       background-color: #121212;
@@ -208,6 +135,8 @@
       cursor: pointer;
     }
 
+    
+
     /* ✅ 手機友善調整 */
     @media (max-width: 600px) {
       h1 {
@@ -233,7 +162,7 @@
 </head>
 
 <body>
-  <button class="homebtn" onclick="window.location.href='https://freetools.uk'">🔧 FreeTools.uk</button>
+  <a href="https://freetools.uk" class="homebtn">🔧 FreeTools.uk</a>
 
 
 
