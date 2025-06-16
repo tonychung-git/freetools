@@ -496,17 +496,37 @@
 
         function checkout() {
             if (cart.length === 0) {
-                alert('your order is empty！');
+                alert('Your order is empty!');
                 return;
             }
 
-            let orderSummary = 'Order Summary:\n\n';
+            // English Order Summary
+            let englishSummary = 'Order Summary:\n\n';
             cart.forEach(item => {
-                orderSummary += `${item.name} x ${item.quantity} = NT$ ${item.price * item.quantity}\n`;
+                englishSummary += `${item.name} x ${item.quantity} = NT$ ${item.price * item.quantity}\n`;
             });
-            orderSummary += `\nTotal: NT$ ${total}`;
+            englishSummary += `\nTotal: NT$ ${total}`;
 
-            alert(orderSummary);
+            // Chinese Order Summary
+            let chineseSummary = '訂單明細：\n\n';
+            cart.forEach(item => {
+                // Convert English customization options to Chinese
+                let chineseItem = item.name
+                    .replace('No Spice', '不辣')
+                    .replace('Mild 🌶️', '小辣')
+                    .replace('Medium 🌶️🌶️', '中辣')
+                    .replace('Hot 🌶️🌶️🌶️', '大辣')
+                    .replace('Cabbage and Bean Sprouts', '高麗菜和豆芽菜')
+                    .replace('Cabbage Only', '全高麗菜')
+                    .replace('Bean Sprouts Only', '全豆芽菜');
+                
+                chineseSummary += `${chineseItem} x ${item.quantity} = NT$ ${item.price * item.quantity}\n`;
+            });
+            chineseSummary += `\n總計：NT$ ${total}`;
+
+            // Show both summaries
+            alert(englishSummary + '\n\n' + '-------------------\n\n' + chineseSummary);
+            
             cart = [];
             updateCart();
         }
