@@ -499,11 +499,11 @@
                 return;
             }
 
-            let orderSummary = '訂單明細：\n\n';
+            let orderSummary = 'Order Summary:\n\n';
             cart.forEach(item => {
                 orderSummary += `${item.name} x ${item.quantity} = NT$ ${item.price * item.quantity}\n`;
             });
-            orderSummary += `\n總計：NT$ ${total}`;
+            orderSummary += `\nTotal: NT$ ${total}`;
 
             alert(orderSummary);
             cart = [];
