@@ -431,8 +431,8 @@
         function confirmCustomization() {
             if (!currentItem) return;
 
-            const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || '不辣';
-            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || '高麗菜 & 豆芽菜';
+            const spiceLevel = document.querySelector('#spiceLevel .selected');
+            const vegetableChoice = document.querySelector('#vegetableChoice .selected');
             if (spiceLevel === 'No Spice') {
                 spiceLevel = '不辣';
             }else if (spiceLevel === 'Mild 🌶️') {
