@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DaPro - 鐵板燒</title>
+    <title>DaPro - Teppanyaki</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
     <style>
         * {
@@ -234,10 +234,118 @@
                 font-size: 1.8em;
             }
         }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .customization-options {
+            margin: 20px 0;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-group h4 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .option-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option-btn.selected {
+            background-color: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .confirm-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 <body>
     <a href="../food-ordering-helper.html" class="homebtn">🍜 Food Ordering Helper</a>
+
+    <!-- Add Modal HTML -->
+    <div id="customizationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>客製化選項</h3>
+            <div class="customization-options">
+                <div class="option-group">
+                    <h4>辣度</h4>
+                    <div class="option-buttons" id="spiceLevel">
+                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">不辣</button>
+                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">小辣</button>
+                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">中辣</button>
+                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">大辣</button>
+                    </div>
+                </div>
+                <div class="option-group">
+                    <h4>蔬菜選擇</h4>
+                    <div class="option-buttons" id="vegetableChoice">
+                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">高麗菜</button>
+                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">豆芽菜</button>
+                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">全高麗菜</button>
+                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">全豆芽菜</button>
+                    </div>
+                </div>
+            </div>
+            <button class="confirm-btn" onclick="confirmCustomization()">確認</button>
+        </div>
+    </div>
 
     <div class="container">
         <header>
@@ -255,7 +363,7 @@
                             <p>3 dishes, 2 steam rice and all-you-can-eat-veggies(cabbage/bean sprouts)</p>
                         </div>
                         <span class="item-price">NT$ 510</span> 
-                        <button class="add-to-cart" onclick="addToCart('COMBO A', 510)">➕</button>
+                        <button class="add-to-cart" onclick="showCustomizationModal('COMBO A', 510)">➕</button>
                     </div>                    
                     <div class="menu-item">
                         <div class="item-info">
@@ -300,6 +408,37 @@
     <script>
         let cart = [];
         let total = 0;
+        let currentItem = null;
+
+        function showCustomizationModal(name, price) {
+            currentItem = { name, price };
+            document.getElementById('customizationModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('customizationModal').style.display = 'none';
+            currentItem = null;
+        }
+
+        function selectOption(button, groupId) {
+            const group = document.getElementById(groupId);
+            const buttons = group.getElementsByClassName('option-btn');
+            for (let btn of buttons) {
+                btn.classList.remove('selected');
+            }
+            button.classList.add('selected');
+        }
+
+        function confirmCustomization() {
+            if (!currentItem) return;
+
+            const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || '不辣';
+            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || '高麗菜';
+
+            const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice})`;
+            addToCart(customizedName, currentItem.price);
+            closeModal();
+        }
 
         function addToCart(name, price) {
             const existingItem = cart.find(item => item.name === name);
