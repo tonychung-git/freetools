@@ -560,8 +560,8 @@
         function confirmCustomization() {
             if (!currentItem) return;
 
-            const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || '不辣';
-            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || '高麗菜';
+            const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || 'No Spice';
+            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || 'Cabbage and Bean Sprouts';
 
             const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice})`;
             addToCart(customizedName, currentItem.price);
