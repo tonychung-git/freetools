@@ -336,7 +336,7 @@
                 <div class="option-group">
                     <h4>Vegetable Choice</h4>
                     <div class="option-buttons" id="vegetableChoice">
-                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Cabbage and Bean Sprouts</button>
+                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Cabbage & Bean Sprouts</button>
                         <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Cabbage Only</button>
                         <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Bean Sprouts Only</button>
                     </div>
@@ -432,7 +432,23 @@
             if (!currentItem) return;
 
             const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || '不辣';
-            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || '高麗菜';
+            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || '高麗菜 & 豆芽菜';
+            if (spiceLevel === 'No Spice') {
+                spiceLevel = '不辣';
+            }else if (spiceLevel === 'Mild 🌶️') {
+                spiceLevel = '小辣';
+            }else if (spiceLevel === 'Medium 🌶️🌶️') {
+                spiceLevel = '中辣';
+            }else if (spiceLevel === 'Hot 🌶️🌶️🌶️') {
+                spiceLevel = '大辣';
+            }
+            if (vegetableChoice === 'Cabbage & Bean Sprouts') {
+                vegetableChoice = '高麗菜 & 豆芽菜';
+            }else if (vegetableChoice === 'Cabbage Only') {
+                vegetableChoice = '全高麗菜';
+            }else if (vegetableChoice === 'Bean Sprouts Only') {
+                vegetableChoice = '全豆芽菜';
+            }
 
             const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice})`;
             addToCart(customizedName, currentItem.price);
