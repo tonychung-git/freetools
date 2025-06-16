@@ -18,16 +18,13 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       cursor: pointer;
       transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
     }
 
     .restaurant-option:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .restaurant-option.selected {
-      background: #e3f2fd;
-      border: 2px solid #2196f3;
     }
 
     .restaurant-image {
@@ -55,6 +52,13 @@
       padding-bottom: 5px;
       border-bottom: 2px solid #e0e0e0;
     }
+
+    .page-description {
+      text-align: center;
+      margin: 20px 0;
+      color: #666;
+      font-size: 1.1em;
+    }
   </style>
 </head>
 <body>
@@ -62,6 +66,7 @@
 
   <div class="container">
     <h1>🍜 Food Ordering Helper</h1>
+    <p class="page-description">Select a restaurant to view their menu and ordering options</p>
 
     <div class="card">
       <div class="section-title">Select Restaurant</div>
@@ -69,310 +74,83 @@
       <div class="restaurant-category">
         <div class="category-title">Teppanyaki</div>
         <div class="grid">
-          <div class="restaurant-option" data-restaurant="teppanyaki">
+          <a href="restaurants/dapu.html" class="restaurant-option">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdOHkHpiUQ_FR2xdD05Q_fxjDfpdZbp_lgFQ&s?w=400&auto=format&fit=crop&q=60" alt="Teppanyaki" class="restaurant-image">
             <div class="restaurant-name">DaPu</div>
-          </div>
+          </a>
         </div>
       </div>
 
       <div class="restaurant-category">
         <div class="category-title">Street Food</div>
         <div class="grid">
-          
-          <div class="restaurant-option" data-restaurant="street-food">
+          <a href="restaurants/formosa-chang.html" class="restaurant-option">
             <img src="https://storage.googleapis.com/www.taiwantradeshow.com.tw/exhibitor-logo/202404/T-17425978.png?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
             <div class="restaurant-name">Formosa Chang</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="street-food">
+          </a>
+          <a href="restaurants/3q.html" class="restaurant-option">
             <img src="https://images.deliveryhero.io/image/fd-tw/tw-logos/cy1rd-logo.jpg?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
             <div class="restaurant-name">3Q</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="street-food">
+          </a>
+          <a href="restaurants/fried-chicken.html" class="restaurant-option">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPi_tp8yRmoIsKFh1BywXmYXsNEGmSGqnbKA&s?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
             <div class="restaurant-name">Fried Chicken</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="street-food">
+          </a>
+          <a href="restaurants/ocean-house.html" class="restaurant-option">
             <img src="https://shaper.fooday.app/width=1200,quality=75,format=auto/72bnwPPUmiQizF8znDHrJU?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
             <div class="restaurant-name">Ocean House</div>
-          </div>
+          </a>
         </div>
       </div>
       
       <div class="restaurant-category">
         <div class="category-title">Noodle House</div>
         <div class="grid">
-          <div class="restaurant-option" data-restaurant="noodle-house">
+          <a href="restaurants/beef-noodle.html" class="restaurant-option">
             <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House" class="restaurant-image">
             <div class="restaurant-name">Beef Noodle</div>
-          </div>
+          </a>
         </div>
       </div>
 
       <div class="restaurant-category">
         <div class="category-title">Bubble Tea Shop</div>
         <div class="grid">
-          <div class="restaurant-option" data-restaurant="bubble-tea">
+          <a href="restaurants/milkshop.html" class="restaurant-option">
             <img src="https://obs.line-scdn.net/0hdAd7B5L9O25ZTi9u8lpEOQsMJAAxYD0mPXQkXihSJAA3Oyh7eS53D3pOYl5xfHU9bS18CXhJZ1Zofns8ZCBwAHRMbV9ze3wwN392CH5OIF8jLn5qMCp2/r.400x0?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
             <div class="restaurant-name">Milkshop</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="bubble-tea">
+          </a>
+          <a href="restaurants/coco.html" class="restaurant-option">
             <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
             <div class="restaurant-name">CoCo</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="bubble-tea">
+          </a>
+          <a href="restaurants/chatime.html" class="restaurant-option">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrXjqIE_ISnUpIX81V22iHrCvH4CVsXZnvg&s?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
             <div class="restaurant-name">Chatime</div>
-          </div>
+          </a>
         </div>
       </div>
 
       <div class="restaurant-category">
         <div class="category-title">Breakfast Shop</div>
         <div class="grid">
-          <div class="restaurant-option" data-restaurant="breakfast">
+          <a href="restaurants/q-burger.html" class="restaurant-option">
             <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
             <div class="restaurant-name">Q Burger</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="breakfast">
+          </a>
+          <a href="restaurants/mwd.html" class="restaurant-option">
             <img src="https://yt3.googleusercontent.com/846IeOyPywm3h0FcVnjN2agZBuBnO3U_eWDVFBeow8Sl2p9_bPSu4PNQwUKIaNZxd7nLPxemhdI=s900-c-k-c0x00ffffff-no-rj?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
             <div class="restaurant-name">MWD</div>
-          </div>
-          <div class="restaurant-option" data-restaurant="breakfast">
+          </a>
+          <a href="restaurants/yonghe.html" class="restaurant-option">
             <img src="https://lh5.googleusercontent.com/p/AF1QipMEbiRIIVuMtDFHlXWgC-eF0oNGrmSQdhdF2xhD?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
             <div class="restaurant-name">Yonghe Soy Milk King</div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
-
-    <div id="menuContainer" class="menu-container">
-      <!-- Menu sections will be dynamically added here -->
-    </div>
-
-    <div class="chinese-display">
-      <div class="section-title">給店員看 (Show to Staff)</div>
-      <div class="chinese-text" id="chineseSummary">尚未選擇項目</div>
-    </div>
-
-    <div class="action-buttons">
-      <button class="btn" onclick="clearOrder()">Clear Order</button>
-      <button class="btn" onclick="copyChinese()">Copy Chinese Text</button>
-    </div>
   </div>
 
-  <script>
-    const restaurantMenus = {
-      'noodle-house': {
-        sections: [
-          {
-            title: 'Main Dish',
-            options: [
-              { en: 'Beef Noodles', zh: '牛肉麵' },
-              { en: 'Pork Noodles', zh: '豬肉麵' },
-              { en: 'Chicken Noodles', zh: '雞肉麵' },
-              { en: 'Vegetable Noodles', zh: '蔬菜麵' }
-            ]
-          },
-          {
-            title: 'Noodle Type',
-            options: [
-              { en: 'Thin Noodles', zh: '細麵' },
-              { en: 'Thick Noodles', zh: '粗麵' },
-              { en: 'Rice Noodles', zh: '米粉' },
-              { en: 'Udon', zh: '烏龍麵' }
-            ]
-          },
-          {
-            title: 'Spiciness Level',
-            options: [
-              { en: 'No Spicy', zh: '不辣' },
-              { en: 'Mild', zh: '小辣' },
-              { en: 'Medium', zh: '中辣' },
-              { en: 'Hot', zh: '大辣' }
-            ]
-          },
-          {
-            title: 'Extras',
-            options: [
-              { en: 'Extra Meat', zh: '加肉' },
-              { en: 'Extra Vegetables', zh: '加菜' },
-              { en: 'Extra Noodles', zh: '加麵' },
-              { en: 'Extra Soup', zh: '加湯' }
-            ]
-          }
-        ]
-      },
-      'bubble-tea': {
-        sections: [
-          {
-            title: 'Drink Type',
-            options: [
-              { en: 'Milk Tea', zh: '奶茶' },
-              { en: 'Green Tea', zh: '綠茶' },
-              { en: 'Black Tea', zh: '紅茶' },
-              { en: 'Fruit Tea', zh: '水果茶' }
-            ]
-          },
-          {
-            title: 'Toppings',
-            options: [
-              { en: 'Pearl', zh: '珍珠' },
-              { en: 'Pudding', zh: '布丁' },
-              { en: 'Grass Jelly', zh: '仙草凍' },
-              { en: 'Red Bean', zh: '紅豆' }
-            ]
-          },
-          {
-            title: 'Ice Level',
-            options: [
-              { en: 'No Ice', zh: '去冰' },
-              { en: 'Less Ice', zh: '少冰' },
-              { en: 'Normal Ice', zh: '正常冰' }
-            ]
-          },
-          {
-            title: 'Sugar Level',
-            options: [
-              { en: 'No Sugar', zh: '無糖' },
-              { en: 'Less Sugar', zh: '少糖' },
-              { en: 'Half Sugar', zh: '半糖' },
-              { en: 'Normal Sugar', zh: '正常糖' }
-            ]
-          }
-        ]
-      },
-      'breakfast': {
-        sections: [
-          {
-            title: 'Main Dish',
-            options: [
-              { en: 'Egg Sandwich', zh: '蛋三明治' },
-              { en: 'Ham Sandwich', zh: '火腿三明治' },
-              { en: 'Chicken Sandwich', zh: '雞肉三明治' },
-              { en: 'Vegetable Sandwich', zh: '蔬菜三明治' }
-            ]
-          },
-          {
-            title: 'Drinks',
-            options: [
-              { en: 'Black Coffee', zh: '黑咖啡' },
-              { en: 'Milk Coffee', zh: '牛奶咖啡' },
-              { en: 'Black Tea', zh: '紅茶' },
-              { en: 'Milk Tea', zh: '奶茶' }
-            ]
-          },
-          {
-            title: 'Extras',
-            options: [
-              { en: 'Extra Egg', zh: '加蛋' },
-              { en: 'Extra Cheese', zh: '加起司' },
-              { en: 'Extra Ham', zh: '加火腿' },
-              { en: 'Extra Vegetables', zh: '加蔬菜' }
-            ]
-          }
-        ]
-      }
-    };
-
-    let selectedRestaurant = null;
-    let selectedOptions = {};
-
-    // Restaurant selection
-    document.querySelectorAll('.restaurant-option').forEach(option => {
-      option.addEventListener('click', () => {
-        document.querySelectorAll('.restaurant-option').forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
-        selectedRestaurant = option.dataset.restaurant;
-        loadMenu(selectedRestaurant);
-      });
-    });
-
-    function loadMenu(restaurant) {
-      const menuContainer = document.getElementById('menuContainer');
-      menuContainer.innerHTML = '';
-      selectedOptions = {};
-
-      restaurantMenus[restaurant].sections.forEach(section => {
-        const sectionDiv = document.createElement('div');
-        sectionDiv.className = 'card';
-        
-        const sectionTitle = document.createElement('div');
-        sectionTitle.className = 'section-title';
-        sectionTitle.textContent = section.title;
-        sectionDiv.appendChild(sectionTitle);
-
-        const optionsGrid = document.createElement('div');
-        optionsGrid.className = 'grid';
-
-        section.options.forEach(option => {
-          const button = document.createElement('div');
-          button.className = 'option-btn';
-          button.dataset.en = option.en;
-          button.dataset.zh = option.zh;
-          button.textContent = option.en;
-
-          button.addEventListener('click', () => {
-            const sectionType = section.title.toLowerCase().replace(/\s+/g, '_');
-            
-            // Allow multiple selections for all sections
-            button.classList.toggle('selected');
-            
-            if (!selectedOptions[sectionType]) {
-              selectedOptions[sectionType] = [];
-            }
-            
-            if (button.classList.contains('selected')) {
-              selectedOptions[sectionType].push(button);
-            } else {
-              selectedOptions[sectionType] = selectedOptions[sectionType].filter(btn => btn !== button);
-            }
-            
-            updateSummary();
-          });
-
-          optionsGrid.appendChild(button);
-        });
-
-        sectionDiv.appendChild(optionsGrid);
-        menuContainer.appendChild(sectionDiv);
-      });
-
-      menuContainer.classList.add('active');
-      updateSummary();
-    }
-
-    function updateSummary() {
-      const chineseParts = [];
-
-      Object.entries(selectedOptions).forEach(([sectionType, options]) => {
-        if (options && options.length > 0) {
-          options.forEach(option => {
-            chineseParts.push(option.dataset.zh);
-          });
-        }
-      });
-
-      document.getElementById('chineseSummary').textContent = 
-        chineseParts.length > 0 ? chineseParts.join('，') : '尚未選擇項目';
-    }
-
-    function clearOrder() {
-      selectedOptions = {};
-      document.querySelectorAll('.option-btn').forEach(btn => {
-        btn.classList.remove('selected');
-      });
-      updateSummary();
-    }
-
-    function copyChinese() {
-      const chineseText = document.getElementById('chineseSummary').textContent;
-      navigator.clipboard.writeText(chineseText).then(() => {
-        alert('Chinese text copied to clipboard!');
-      }).catch(err => {
-        console.error('Failed to copy text: ', err);
-      });
-    }
-  </script>
+  <footer>© 2025 Freetools.uk by Tony Chung</footer>
 </body>
 </html>
