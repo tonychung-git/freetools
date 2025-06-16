@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Ordering Helper</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .restaurant-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .restaurant-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .restaurant-image {
+      width: 100%;
+      height: 0;
+      padding-bottom: 75%; /* 4:3 aspect ratio */
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .restaurant-image img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #fff;
+    }
+
+    .restaurant-name {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .restaurant-category {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .category-title {
+      font-size: 1.4em;
+      font-weight: bold;
+      color: #333;
+      margin: 15px 0;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #e0e0e0;
+      text-align: center;
+    }
+
+    .page-description {
+      text-align: center;
+      margin: 20px 0;
+      color: #666;
+      font-size: 1.1em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 15px;
+      justify-items: center;
+    }
+
+    /* Responsive breakpoints */
+    @media (max-width: 1200px) {
+      .restaurant-option {
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .restaurant-option {
+        max-width: 240px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .restaurant-option {
+        max-width: 200px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        max-width: 250px;
+        margin: 0 auto;
+      }
+
+      .container {
+        padding: 0 10px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .restaurant-option {
+        max-width: 180px;
+      }
+
+      .restaurant-name {
+        font-size: 1.1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="https://freetools.uk" class="homebtn">🔧 FreeTools.uk</a>
+
+  <div class="container">
+    <h1>🍜 Food Ordering Helper</h1>
+    <p class="page-description">Select a restaurant to view their menu and ordering options</p>
+
+    <div class="card">
+      <div class="section-title">Select Restaurant</div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Teppanyaki</div>
+        <div class="grid">
+          <a href="restaurants/dapu.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdOHkHpiUQ_FR2xdD05Q_fxjDfpdZbp_lgFQ&s?w=400&auto=format&fit=crop&q=60" alt="Teppanyaki">
+            </div>
+            <div class="restaurant-name">DaPu</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Street Food</div>
+        <div class="grid">
+          <a href="restaurants/formosa-chang.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://storage.googleapis.com/www.taiwantradeshow.com.tw/exhibitor-logo/202404/T-17425978.png?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
+            <div class="restaurant-name">Formosa Chang</div>
+          </a>
+          <a href="restaurants/3q.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://images.deliveryhero.io/image/fd-tw/tw-logos/cy1rd-logo.jpg?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
+            <div class="restaurant-name">3Q</div>
+          </a>
+          <a href="restaurants/fried-chicken.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPi_tp8yRmoIsKFh1BywXmYXsNEGmSGqnbKA&s?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
+            <div class="restaurant-name">Fried Chicken</div>
+          </a>
+          <a href="restaurants/ocean-house.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://shaper.fooday.app/width=1200,quality=75,format=auto/72bnwPPUmiQizF8znDHrJU?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
+            <div class="restaurant-name">Ocean House</div>
+          </a>
+        </div>
+      </div>
+      
+      <div class="restaurant-category">
+        <div class="category-title">Noodle House</div>
+        <div class="grid">
+          <a href="restaurants/beef-noodle.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House">
+            </div>
+            <div class="restaurant-name">Beef Noodle</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Bubble Tea Shop</div>
+        <div class="grid">
+          <a href="restaurants/milkshop.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://obs.line-scdn.net/0hdAd7B5L9O25ZTi9u8lpEOQsMJAAxYD0mPXQkXihSJAA3Oyh7eS53D3pOYl5xfHU9bS18CXhJZ1Zofns8ZCBwAHRMbV9ze3wwN392CH5OIF8jLn5qMCp2/r.400x0?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
+            <div class="restaurant-name">Milkshop</div>
+          </a>
+          <a href="restaurants/coco.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
+            <div class="restaurant-name">CoCo</div>
+          </a>
+          <a href="restaurants/chatime.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrXjqIE_ISnUpIX81V22iHrCvH4CVsXZnvg&s?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
+            <div class="restaurant-name">Chatime</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="restaurant-category">
+        <div class="category-title">Breakfast Shop</div>
+        <div class="grid">
+          <a href="restaurants/q-burger.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
+            <div class="restaurant-name">Q Burger</div>
+          </a>
+          <a href="restaurants/mwd.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://yt3.googleusercontent.com/846IeOyPywm3h0FcVnjN2agZBuBnO3U_eWDVFBeow8Sl2p9_bPSu4PNQwUKIaNZxd7nLPxemhdI=s900-c-k-c0x00ffffff-no-rj?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
+            <div class="restaurant-name">MWD</div>
+          </a>
+          <a href="restaurants/yonghe.html" class="restaurant-option">
+            <div class="restaurant-image">
+              <img src="https://lh5.googleusercontent.com/p/AF1QipMEbiRIIVuMtDFHlXWgC-eF0oNGrmSQdhdF2xhD?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
+            <div class="restaurant-name">Yonghe Soy Milk King</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 Freetools.uk by Tony Chung</footer>
+</body>
+</html>
