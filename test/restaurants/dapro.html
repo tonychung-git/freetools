@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大埔餐廳 - 線上點餐</title>
+    <title>DaPro - 鐵板燒</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍜</text></svg>">
     <style>
         * {
             margin: 0;
@@ -15,6 +16,7 @@
         body {
             background-color: #f5f5f5;
             color: #333;
+            line-height: 1.6;
         }
 
         .container {
@@ -23,12 +25,57 @@
             padding: 20px;
         }
 
+        .homebtn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .homebtn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
         header {
-            background-color: #e74c3c;
-            color: white;
-            padding: 20px 0;
             text-align: center;
             margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .page-description {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
         }
 
         .menu-container {
@@ -50,6 +97,12 @@
             align-items: center;
             padding: 15px;
             border-bottom: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
         .menu-item:last-child {
@@ -58,6 +111,16 @@
 
         .item-info {
             flex-grow: 1;
+        }
+
+        .item-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-info p {
+            color: #666;
+            font-size: 0.9em;
         }
 
         .item-price {
@@ -73,11 +136,12 @@
             padding: 8px 15px;
             border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .add-to-cart:hover {
             background-color: #c0392b;
+            transform: translateY(-2px);
         }
 
         .cart-section {
@@ -115,11 +179,12 @@
             margin-top: 20px;
             cursor: pointer;
             font-size: 1.1em;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
         }
 
         .checkout-btn:hover {
             background-color: #27ae60;
+            transform: translateY(-2px);
         }
 
         .quantity-control {
@@ -135,55 +200,92 @@
             height: 25px;
             border-radius: 4px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: #ddd;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-container {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-section {
+                position: static;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>大埔餐廳</h1>
-        <p>美味佳餚，盡在掌握</p>
-    </header>
+    <a href="../food-ordering-helper.html" class="homebtn">🔧 FreeTools.uk</a>
 
     <div class="container">
-        <div class="menu-container">
-            <div class="menu-section">
-                <h2>菜單</h2>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <h3>招牌炒飯</h3>
-                        <p>使用特選米飯，搭配新鮮蔬菜</p>
-                    </div>
-                    <span class="item-price">NT$ 120</span>
-                    <button class="add-to-cart" onclick="addToCart('招牌炒飯', 120)">加入購物車</button>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <h3>宮保雞丁</h3>
-                        <p>香辣可口，搭配花生</p>
-                    </div>
-                    <span class="item-price">NT$ 180</span>
-                    <button class="add-to-cart" onclick="addToCart('宮保雞丁', 180)">加入購物車</button>
-                </div>
-                <div class="menu-item">
-                    <div class="item-info">
-                        <h3>麻婆豆腐</h3>
-                        <p>嫩滑豆腐，麻辣鮮香</p>
-                    </div>
-                    <span class="item-price">NT$ 150</span>
-                    <button class="add-to-cart" onclick="addToCart('麻婆豆腐', 150)">加入購物車</button>
-                </div>
-            </div>
+        <header>
+            <h1>🍜 DaPro 鐵板燒</h1>
+            <p class="page-description">精緻鐵板料理，為您帶來極致美食體驗</p>
+        </header>
 
-            <div class="cart-section">
-                <h2>購物車</h2>
-                <div id="cart-items"></div>
-                <div class="cart-total">
-                    總計: NT$ <span id="total">0</span>
+        <div class="card">
+            <div class="section-title">菜單</div>
+            <div class="menu-container">
+                <div class="menu-section">
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h3>招牌炒飯</h3>
+                            <p>使用特選米飯，搭配新鮮蔬菜</p>
+                        </div>
+                        <span class="item-price">NT$ 120</span>
+                        <button class="add-to-cart" onclick="addToCart('招牌炒飯', 120)">加入購物車</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h3>宮保雞丁</h3>
+                            <p>香辣可口，搭配花生</p>
+                        </div>
+                        <span class="item-price">NT$ 180</span>
+                        <button class="add-to-cart" onclick="addToCart('宮保雞丁', 180)">加入購物車</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h3>麻婆豆腐</h3>
+                            <p>嫩滑豆腐，麻辣鮮香</p>
+                        </div>
+                        <span class="item-price">NT$ 150</span>
+                        <button class="add-to-cart" onclick="addToCart('麻婆豆腐', 150)">加入購物車</button>
+                    </div>
                 </div>
-                <button class="checkout-btn" onclick="checkout()">確認訂單</button>
+
+                <div class="cart-section">
+                    <div class="section-title">購物車</div>
+                    <div id="cart-items"></div>
+                    <div class="cart-total">
+                        總計: NT$ <span id="total">0</span>
+                    </div>
+                    <button class="checkout-btn" onclick="checkout()">確認訂單</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <footer>© 2025 Freetools.uk by Tony Chung</footer>
 
     <script>
         let cart = [];
