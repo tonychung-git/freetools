@@ -241,47 +241,55 @@
 
     <div class="container">
         <header>
-            <h1>🍜 DaPro 鐵板燒</h1>
-            <p class="page-description">精緻鐵板料理，為您帶來極致美食體驗</p>
+            <h1>🍳 DaPro</h1>
+            <p class="page-description">DaPro is a restaurant that serves Teppanyaki</p>
         </header>
 
         <div class="card">
-            <div class="section-title">菜單</div>
+            <div class="section-title">Menu</div>
             <div class="menu-container">
                 <div class="menu-section">
                     <div class="menu-item">
                         <div class="item-info">
-                            <h3>招牌炒飯</h3>
-                            <p>使用特選米飯，搭配新鮮蔬菜</p>
+                            <h3>COMBO A (2 people meal)</h3>
+                            <p>3 dishes, 2 steam rice and all-you-can-eat-veggies(cabbage/bean sprouts)</p>
                         </div>
-                        <span class="item-price">NT$ 120</span>
-                        <button class="add-to-cart" onclick="addToCart('招牌炒飯', 120)">➕</button>
+                        <span class="item-price">NT$ 510</span> 
+                        <button class="add-to-cart" onclick="addToCart('COMBO A', 510)">➕</button>
+                    </div>                    
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h3>Beef</h3>
+                            <p>Beef Teppanyaki is a dish that is made with beef and green onion</p>
+                        </div>
+                        <span class="item-price">NT$ 190</span>
+                        <button class="add-to-cart" onclick="addToCart('Beef', 190)">➕</button>
                     </div>
                     <div class="menu-item">
                         <div class="item-info">
-                            <h3>宮保雞丁</h3>
-                            <p>香辣可口，搭配花生</p>
+                            <h3>Pork</h3>
+                            <p>Pork Teppanyaki is a dish that is made with pork and green onion</p>
                         </div>
-                        <span class="item-price">NT$ 180</span>
-                        <button class="add-to-cart" onclick="addToCart('宮保雞丁', 180)">➕</button>
+                        <span class="item-price">NT$ 190</span>
+                        <button class="add-to-cart" onclick="addToCart('Pork', 190)">➕</button>
                     </div>
                     <div class="menu-item">
                         <div class="item-info">
-                            <h3>麻婆豆腐</h3>
-                            <p>嫩滑豆腐，麻辣鮮香</p>
+                            <h3>Lamb</h3>
+                            <p>Lamb Teppanyaki is a dish that is made with lamb and green onion</p>
                         </div>
-                        <span class="item-price">NT$ 150</span>
-                        <button class="add-to-cart" onclick="addToCart('麻婆豆腐', 150)">➕</button>
+                        <span class="item-price">NT$ 190</span>
+                        <button class="add-to-cart" onclick="addToCart('Lamb', 190)">➕</button>
                     </div>
                 </div>
 
                 <div class="cart-section">
-                    <div class="section-title">購物車</div>
+                    <div class="section-title">Cart</div>
                     <div id="cart-items"></div>
                     <div class="cart-total">
-                        總計: NT$ <span id="total">0</span>
+                        Total: NT$ <span id="total">0</span>
                     </div>
-                    <button class="checkout-btn" onclick="checkout()">確認訂單</button>
+                    <button class="checkout-btn" onclick="checkout()">Checkout</button>
                 </div>
             </div>
         </div>
@@ -349,7 +357,7 @@
 
         function checkout() {
             if (cart.length === 0) {
-                alert('購物車是空的！');
+                alert('your order is empty！');
                 return;
             }
 
