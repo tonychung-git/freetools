@@ -20,6 +20,9 @@
       transition: all 0.3s ease;
       text-decoration: none;
       color: inherit;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
     .restaurant-option:hover {
@@ -28,7 +31,7 @@
     }
 
     .restaurant-image {
-      width: 200px;
+      width: 100%;
       height: 150px;
       object-fit: cover;
       border-radius: 4px;
@@ -42,6 +45,7 @@
 
     .restaurant-category {
       margin-bottom: 20px;
+      width: 100%;
     }
 
     .category-title {
@@ -51,6 +55,7 @@
       margin: 15px 0;
       padding-bottom: 5px;
       border-bottom: 2px solid #e0e0e0;
+      text-align: center;
     }
 
     .page-description {
@@ -58,6 +63,39 @@
       margin: 20px 0;
       color: #666;
       font-size: 1.1em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 0 15px;
+      justify-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .restaurant-option {
+        max-width: 250px;
+      }
+
+      .restaurant-image {
+        height: 120px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .container {
+        padding: 0 10px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+        text-align: center;
+      }
     }
   </style>
 </head>
