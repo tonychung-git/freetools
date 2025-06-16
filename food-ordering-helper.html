@@ -32,9 +32,21 @@
 
     .restaurant-image {
       width: 100%;
-      height: 150px;
-      object-fit: cover;
+      height: 0;
+      padding-bottom: 75%; /* 4:3 aspect ratio */
+      position: relative;
+      overflow: hidden;
       border-radius: 4px;
+    }
+
+    .restaurant-image img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background-color: #fff;
     }
 
     .restaurant-name {
@@ -73,13 +85,22 @@
       justify-items: center;
     }
 
+    /* Responsive breakpoints */
+    @media (max-width: 1200px) {
+      .restaurant-option {
+        max-width: 280px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .restaurant-option {
+        max-width: 240px;
+      }
+    }
+
     @media (max-width: 768px) {
       .restaurant-option {
         max-width: 200px;
-      }
-
-      .restaurant-image {
-        height: 120px;
       }
 
       .grid {
@@ -95,6 +116,16 @@
       h1 {
         font-size: 1.8em;
         text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .restaurant-option {
+        max-width: 180px;
+      }
+
+      .restaurant-name {
+        font-size: 1.1em;
       }
     }
   </style>
@@ -113,7 +144,9 @@
         <div class="category-title">Teppanyaki</div>
         <div class="grid">
           <a href="restaurants/dapu.html" class="restaurant-option">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdOHkHpiUQ_FR2xdD05Q_fxjDfpdZbp_lgFQ&s?w=400&auto=format&fit=crop&q=60" alt="Teppanyaki" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdOHkHpiUQ_FR2xdD05Q_fxjDfpdZbp_lgFQ&s?w=400&auto=format&fit=crop&q=60" alt="Teppanyaki">
+            </div>
             <div class="restaurant-name">DaPu</div>
           </a>
         </div>
@@ -123,19 +156,27 @@
         <div class="category-title">Street Food</div>
         <div class="grid">
           <a href="restaurants/formosa-chang.html" class="restaurant-option">
-            <img src="https://storage.googleapis.com/www.taiwantradeshow.com.tw/exhibitor-logo/202404/T-17425978.png?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://storage.googleapis.com/www.taiwantradeshow.com.tw/exhibitor-logo/202404/T-17425978.png?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
             <div class="restaurant-name">Formosa Chang</div>
           </a>
           <a href="restaurants/3q.html" class="restaurant-option">
-            <img src="https://images.deliveryhero.io/image/fd-tw/tw-logos/cy1rd-logo.jpg?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://images.deliveryhero.io/image/fd-tw/tw-logos/cy1rd-logo.jpg?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
             <div class="restaurant-name">3Q</div>
           </a>
           <a href="restaurants/fried-chicken.html" class="restaurant-option">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPi_tp8yRmoIsKFh1BywXmYXsNEGmSGqnbKA&s?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPi_tp8yRmoIsKFh1BywXmYXsNEGmSGqnbKA&s?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
             <div class="restaurant-name">Fried Chicken</div>
           </a>
           <a href="restaurants/ocean-house.html" class="restaurant-option">
-            <img src="https://shaper.fooday.app/width=1200,quality=75,format=auto/72bnwPPUmiQizF8znDHrJU?w=400&auto=format&fit=crop&q=60" alt="Street Food" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://shaper.fooday.app/width=1200,quality=75,format=auto/72bnwPPUmiQizF8znDHrJU?w=400&auto=format&fit=crop&q=60" alt="Street Food">
+            </div>
             <div class="restaurant-name">Ocean House</div>
           </a>
         </div>
@@ -145,7 +186,9 @@
         <div class="category-title">Noodle House</div>
         <div class="grid">
           <a href="restaurants/beef-noodle.html" class="restaurant-option">
-            <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://d3egcl3bvwgcig.cloudfront.net/brand/a382727f912f75e2aa9b9a3ed38824e6_m.jpg?w=400&auto=format&fit=crop&q=60" alt="Noodle House">
+            </div>
             <div class="restaurant-name">Beef Noodle</div>
           </a>
         </div>
@@ -155,15 +198,21 @@
         <div class="category-title">Bubble Tea Shop</div>
         <div class="grid">
           <a href="restaurants/milkshop.html" class="restaurant-option">
-            <img src="https://obs.line-scdn.net/0hdAd7B5L9O25ZTi9u8lpEOQsMJAAxYD0mPXQkXihSJAA3Oyh7eS53D3pOYl5xfHU9bS18CXhJZ1Zofns8ZCBwAHRMbV9ze3wwN392CH5OIF8jLn5qMCp2/r.400x0?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://obs.line-scdn.net/0hdAd7B5L9O25ZTi9u8lpEOQsMJAAxYD0mPXQkXihSJAA3Oyh7eS53D3pOYl5xfHU9bS18CXhJZ1Zofns8ZCBwAHRMbV9ze3wwN392CH5OIF8jLn5qMCp2/r.400x0?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
             <div class="restaurant-name">Milkshop</div>
           </a>
           <a href="restaurants/coco.html" class="restaurant-option">
-            <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://www.hihitmedia.com.tw/wp-content/uploads/2021/03/CoCo.png?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
             <div class="restaurant-name">CoCo</div>
           </a>
           <a href="restaurants/chatime.html" class="restaurant-option">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrXjqIE_ISnUpIX81V22iHrCvH4CVsXZnvg&s?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwrXjqIE_ISnUpIX81V22iHrCvH4CVsXZnvg&s?w=400&auto=format&fit=crop&q=60" alt="Bubble Tea Shop">
+            </div>
             <div class="restaurant-name">Chatime</div>
           </a>
         </div>
@@ -173,15 +222,21 @@
         <div class="category-title">Breakfast Shop</div>
         <div class="grid">
           <a href="restaurants/q-burger.html" class="restaurant-option">
-            <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://images.jifo.co/54417664_1650362541716.jpg?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
             <div class="restaurant-name">Q Burger</div>
           </a>
           <a href="restaurants/mwd.html" class="restaurant-option">
-            <img src="https://yt3.googleusercontent.com/846IeOyPywm3h0FcVnjN2agZBuBnO3U_eWDVFBeow8Sl2p9_bPSu4PNQwUKIaNZxd7nLPxemhdI=s900-c-k-c0x00ffffff-no-rj?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://yt3.googleusercontent.com/846IeOyPywm3h0FcVnjN2agZBuBnO3U_eWDVFBeow8Sl2p9_bPSu4PNQwUKIaNZxd7nLPxemhdI=s900-c-k-c0x00ffffff-no-rj?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
             <div class="restaurant-name">MWD</div>
           </a>
           <a href="restaurants/yonghe.html" class="restaurant-option">
-            <img src="https://lh5.googleusercontent.com/p/AF1QipMEbiRIIVuMtDFHlXWgC-eF0oNGrmSQdhdF2xhD?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop" class="restaurant-image">
+            <div class="restaurant-image">
+              <img src="https://lh5.googleusercontent.com/p/AF1QipMEbiRIIVuMtDFHlXWgC-eF0oNGrmSQdhdF2xhD?w=400&auto=format&fit=crop&q=60" alt="Breakfast Shop">
+            </div>
             <div class="restaurant-name">Yonghe Soy Milk King</div>
           </a>
         </div>
