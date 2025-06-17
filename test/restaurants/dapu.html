@@ -435,7 +435,7 @@
             </div>
 
             <div class="order-summary-divider"></div>
-            
+
             <div class="order-summary-section">
                 <h3>Order Summary</h3>
                 <div id="englishSummary" class="order-summary-items"></div>
@@ -650,7 +650,7 @@
                     .replace('Cabbage Only', '全高麗菜')
                     .replace('Bean Sprouts Only', '全豆芽菜');
                 
-                chineseSummary += `<div class="order-summary-item">${chineseItem} x ${item.quantity} = NT$ ${item.price * item.quantity}</div>`;
+                chineseSummary += `<div class="order-summary-item">${chineseItem} x ${item.quantity} <br> = NT$ ${item.price * item.quantity}</div>`;
             });
             document.getElementById('chineseSummary').innerHTML = chineseSummary;
             document.getElementById('chineseTotal').innerHTML = `總計：NT$ ${total}`;
