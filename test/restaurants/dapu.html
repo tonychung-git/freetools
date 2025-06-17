@@ -564,18 +564,20 @@
             const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || 'No Spice';
             const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || 'Cabbage and Bean Sprouts';
 
-            const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice})`;
+            const customizedName = `${currentItem.name}`;
+            const customizedDetail = `(${spiceLevel}, ${vegetableChoice})`;
             addToCart(customizedName, currentItem.price);
             closeModal();
         }
 
-        function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
+        function addToCart(name, detail, price) {
+            const existingItem = cart.find(item => item.name === name && item.detail === detail);
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
                 cart.push({
                     name: name,
+                    detail: detail,
                     price: price,
                     quantity: 1
                 });
@@ -596,7 +598,7 @@
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
                     <div class="item-info">
-                        <h4>${item.name}</h4>
+                        <h4>${item.name} <br> ${item.detail}</h4>
                         <p>NT$ ${item.price} x ${item.quantity}</p>
                     </div>
                     <div class="quantity-control">
