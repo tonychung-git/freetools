@@ -1,0 +1,86 @@
+{
+    "menuItems": [
+        {
+            "id": "combo-a",
+            "name": "COMBO A",
+            "description": "3 dishes, 2 steam rice, all-you-can-eat-veggies(cabbage/bean sprouts)",
+            "price": 510,
+            "isCombo": true
+        },
+        {
+            "id": "beef",
+            "name": "Beef and Green Onion",
+            "description": "Beef and Green Onion, 1 steam rice, all-you-can-eat-veggies(cabbage/bean sprouts)",
+            "price": 190,
+            "isCombo": false
+        },
+        {
+            "id": "pork",
+            "name": "Pork and Green Onion",
+            "description": "Pork and Green Onion, 1 steam rice, all-you-can-eat-veggies(cabbage/bean sprouts)",
+            "price": 190,
+            "isCombo": false
+        },
+        {
+            "id": "lamb",
+            "name": "Lamb and Green Onion",
+            "description": "Lamb and Green Onion, 1 steam rice, all-you-can-eat-veggies(cabbage/bean sprouts)",
+            "price": 190,
+            "isCombo": false
+        }
+    ],
+    "customizationOptions": {
+        "firstDishChoice": [
+            "Beef",
+            "Pork",
+            "Lamb"
+        ],
+        "secondDishChoice": [
+            "Tofu",
+            "Mushroom",
+            "Tofu skin"
+        ],
+        "thirdDishChoice": [
+            "Shrimp",
+            "Squid",
+            "Crab Meat",
+            "Halibut",
+            "Salmon",
+            "Basa",
+            "Mackerel"
+        ],
+        "spiceLevel": [
+            "No Spice",
+            "Mild 🌶️",
+            "Medium 🌶️🌶️",
+            "Hot 🌶️🌶️🌶️"
+        ],
+        "vegetableChoice": [
+            "Cabbage and Bean Sprouts",
+            "Cabbage Only",
+            "Bean Sprouts Only"
+        ]
+    },
+    "translations": {
+        "Beef": "牛肉",
+        "Pork": "豬肉",
+        "Lamb": "羊肉",
+        "Tofu": "豆腐",
+        "Mushroom": "綜合菇",
+        "Tofu skin": "豆皮",
+        "Shrimp": "蝦",
+        "Squid": "花枝",
+        "Crab Meat": "蟳肉",
+        "Halibut": "比目魚",
+        "Salmon": "鮭魚",
+        "Basa": "巴沙魚",
+        "Mackerel": "鯖魚",
+        "No Spice": "不辣",
+        "Mild 🌶️": "小辣",
+        "Medium 🌶️🌶️": "中辣",
+        "Hot 🌶️🌶️🌶️": "大辣",
+        "Cabbage and Bean Sprouts": "高麗菜和豆芽菜",
+        "Cabbage Only": "全高麗菜",
+        "Bean Sprouts Only": "全豆芽菜"
+    }
+} 

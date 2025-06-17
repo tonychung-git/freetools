@@ -29,7 +29,6 @@
                 <div id="englishTotal" class="order-summary-total"></div>
             </div>
 
-
             <button class="print-btn" onclick="closeOrderSummary()">Back to Menu</button>
         </div>
     </div>
@@ -39,56 +38,8 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h3>Customization Options</h3>
-            <div class="customization-options">
-                <div class="option-group">
-                    <h4>1st Dish Choice</h4>
-                    <div class="option-buttons" id="firstDishChoice">
-                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Beef</button>
-                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Pork</button>
-                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Lamb</button>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <h4>2nd Dish Choice</h4>
-                    <div class="option-buttons" id="secondDishChoice">
-                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Tofu</button>
-                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Mushroom</button>
-                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Tofu skin</button>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <h4>3rd Dish Choice</h4>
-                    <div class="option-buttons" id="thirdDishChoice">
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Shrimp</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Squid</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Crab Meat</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Halibut</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Salmon</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Basa</button>
-                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Mackerel</button>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <h4>Spice Level</h4>
-                    <div class="option-buttons" id="spiceLevel">
-                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">No Spice</button>
-                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">Mild 🌶️</button>
-                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">Medium 🌶️🌶️</button>
-                        <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">Hot 🌶️🌶️🌶️</button>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <h4>Vegetable Choice</h4>
-                    <div class="option-buttons" id="vegetableChoice">
-                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Cabbage and Bean Sprouts</button>
-                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Cabbage Only</button>
-                        <button class="option-btn" onclick="selectOption(this, 'vegetableChoice')">Bean Sprouts Only</button>
-                    </div>
-                </div>
+            <div class="customization-options" id="customizationOptions">
+                <!-- Options will be dynamically inserted here -->
             </div>
             <button class="confirm-btn" onclick="confirmCustomization()">Confirm</button>
         </div>
@@ -104,39 +55,8 @@
         <div class="card">
             <div class="section-title">Menu</div>
             <div class="menu-container">
-                <div class="menu-section">
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h3>COMBO A<br>(2 people meal)</h3>
-                            <p>3 dishes, 2 steam rice, <br> all-you-can-eat-veggies(cabbage/bean sprouts)</p>
-                        </div>
-                        <span class="item-price">NT$ 510</span> 
-                        <button class="add-to-cart" onclick="showCustomizationModal('COMBO A', 510)">➕</button>
-                    </div>                    
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h3>Beef and Green Onion</h3>
-                            <p>Beef and Green Onion, 1 steam rice, <br> all-you-can-eat-veggies(cabbage/bean sprouts)</p>
-                        </div>
-                        <span class="item-price">NT$ 190</span>
-                        <button class="add-to-cart" onclick="addToCart('Beef', 190)">➕</button>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h3>Pork and Green Onion</h3>
-                            <p>Pork and Green Onion, 1 steam rice, <br> all-you-can-eat-veggies(cabbage/bean sprouts)</p>
-                        </div>
-                        <span class="item-price">NT$ 190</span>
-                        <button class="add-to-cart" onclick="addToCart('Pork', 190)">➕</button>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h3>Lamb and Green Onion</h3>
-                            <p>Lamb and Green Onion, 1 steam rice, <br> all-you-can-eat-veggies(cabbage/bean sprouts)</p>
-                        </div>
-                        <span class="item-price">NT$ 190</span>
-                        <button class="add-to-cart" onclick="addToCart('Lamb', 190)">➕</button>
-                    </div>
+                <div class="menu-section" id="menuItems">
+                    <!-- Menu items will be dynamically inserted here -->
                 </div>
 
                 <div class="cart-section">
@@ -157,6 +77,53 @@
         let cart = [];
         let total = 0;
         let currentItem = null;
+        let menuData = null;
+
+        // Load menu data
+        fetch('dapu.json')
+            .then(response => response.json())
+            .then(data => {
+                menuData = data;
+                initializeMenu();
+                initializeCustomizationOptions();
+            })
+            .catch(error => console.error('Error loading menu data:', error));
+
+        function initializeMenu() {
+            const menuContainer = document.getElementById('menuItems');
+            menuData.menuItems.forEach(item => {
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item';
+                menuItem.innerHTML = `
+                    <div class="item-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.description}</p>
+                    </div>
+                    <span class="item-price">NT$ ${item.price}</span>
+                    <button class="add-to-cart" onclick="${item.isCombo ? 
+                        `showCustomizationModal('${item.name}', ${item.price})` : 
+                        `addToCart('${item.name}', ${item.price})`}">➕</button>
+                `;
+                menuContainer.appendChild(menuItem);
+            });
+        }
+
+        function initializeCustomizationOptions() {
+            const optionsContainer = document.getElementById('customizationOptions');
+            Object.entries(menuData.customizationOptions).forEach(([key, options]) => {
+                const optionGroup = document.createElement('div');
+                optionGroup.className = 'option-group';
+                optionGroup.innerHTML = `
+                    <h4>${key.replace(/([A-Z])/g, ' $1').trim()}</h4>
+                    <div class="option-buttons" id="${key}">
+                        ${options.map(option => `
+                            <button class="option-btn" onclick="selectOption(this, '${key}')">${option}</button>
+                        `).join('')}
+                    </div>
+                `;
+                optionsContainer.appendChild(optionGroup);
+            });
+        }
 
         function showCustomizationModal(name, price) {
             currentItem = { name, price };
@@ -180,13 +147,13 @@
         function confirmCustomization() {
             if (!currentItem) return;
 
-            const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || 'No Spice';
-            const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || 'Cabbage and Bean Sprouts';
-            const firstDishChoice = document.querySelector('#firstDishChoice .selected')?.textContent || 'Beef';
-            const secondDishChoice = document.querySelector('#secondDishChoice .selected')?.textContent || 'Tofu';
-            const thirdDishChoice = document.querySelector('#thirdDishChoice .selected')?.textContent || 'Shrimp';
+            const options = {};
+            Object.keys(menuData.customizationOptions).forEach(key => {
+                options[key] = document.querySelector(`#${key} .selected`)?.textContent || 
+                    menuData.customizationOptions[key][0];
+            });
 
-            const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice}, ${firstDishChoice}, ${secondDishChoice}, ${thirdDishChoice})`;
+            const customizedName = `${currentItem.name} (${options.spiceLevel}, ${options.vegetableChoice}, ${options.firstDishChoice}, ${options.secondDishChoice}, ${options.thirdDishChoice})`;
             addToCart(customizedName, currentItem.price);
             closeModal();
         }
@@ -265,28 +232,10 @@
             let chineseSummary = '';
             orderCount = 1;
             cart.forEach(item => {
-                // Convert English customization options to Chinese
-                let chineseItem = item.name
-                    .replace('Beef', '牛肉')
-                    .replace('Pork', '豬肉')
-                    .replace('Lamb', '羊肉')
-                    .replace('Tofu', '豆腐')
-                    .replace('Mushroom', '綜合菇')
-                    .replace('Tofu skin', '豆皮')
-                    .replace('Shrimp', '蝦')
-                    .replace('Squid', '花枝')
-                    .replace('Crab Meat', '蟳肉')
-                    .replace('Halibut', '比目魚')
-                    .replace('Salmon', '鮭魚')
-                    .replace('Basa', '巴沙魚')
-                    .replace('Mackerel', '鯖魚')
-                    .replace('No Spice', '不辣')
-                    .replace('Mild 🌶️', '小辣')
-                    .replace('Medium 🌶️🌶️', '中辣')
-                    .replace('Hot 🌶️🌶️🌶️', '大辣')
-                    .replace('Cabbage and Bean Sprouts', '高麗菜和豆芽菜')
-                    .replace('Cabbage Only', '全高麗菜')
-                    .replace('Bean Sprouts Only', '全豆芽菜');
+                let chineseItem = item.name;
+                Object.entries(menuData.translations).forEach(([eng, chn]) => {
+                    chineseItem = chineseItem.replace(eng, chn);
+                });
                 
                 chineseSummary += `<div class="order-summary-item"> ${orderCount}. ${chineseItem} <br> x ${item.quantity} = NT$ ${item.price * item.quantity}</div>`;
                 orderCount++;
