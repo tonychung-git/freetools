@@ -634,7 +634,7 @@
             // English Order Summary
             let englishSummary = '';
             cart.forEach(item => {
-                englishSummary += `<div class="order-summary-item"> ${orderCount}. ${item.name} x ${item.quantity} = NT$ ${item.price * item.quantity}</div>`;
+                englishSummary += `<div class="order-summary-item"> ${orderCount}. ${item.name} <br> x ${item.quantity} = NT$ ${item.price * item.quantity}</div>`;
                 orderCount++;
             });
             document.getElementById('englishSummary').innerHTML = englishSummary;
@@ -654,7 +654,7 @@
                     .replace('Cabbage Only', '全高麗菜')
                     .replace('Bean Sprouts Only', '全豆芽菜');
                 
-                chineseSummary += `<div class="order-summary-item"> ${orderCount}. ${chineseItem} x ${item.quantity} <br> = NT$ ${item.price * item.quantity}</div>`;
+                chineseSummary += `<div class="order-summary-item"> ${orderCount}. ${chineseItem} <br> x ${item.quantity} = NT$ ${item.price * item.quantity}</div>`;
                 orderCount++;
             });
             document.getElementById('chineseSummary').innerHTML = chineseSummary;
