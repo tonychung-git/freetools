@@ -283,6 +283,7 @@ footer {
 .confirm-btn {
     background-color: #2ecc71;
     color: rgb(0, 0, 0);
+    font-weight: bold;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
