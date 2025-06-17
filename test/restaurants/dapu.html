@@ -429,18 +429,19 @@
             <span class="order-summary-close" onclick="closeOrderSummary()">&times;</span>
             
             <div class="order-summary-section">
+                <h3>訂單明細 Show to Cashier</h3>
+                <div id="chineseSummary" class="order-summary-items"></div>
+                <div id="chineseTotal" class="order-summary-total"></div>
+            </div>
+
+            <div class="order-summary-divider"></div>
+            
+            <div class="order-summary-section">
                 <h3>Order Summary</h3>
                 <div id="englishSummary" class="order-summary-items"></div>
                 <div id="englishTotal" class="order-summary-total"></div>
             </div>
 
-            <div class="order-summary-divider"></div>
-
-            <div class="order-summary-section">
-                <h3>訂單明細 Show to Cashier</h3>
-                <div id="chineseSummary" class="order-summary-items"></div>
-                <div id="chineseTotal" class="order-summary-total"></div>
-            </div>
 
             <button class="print-btn" onclick="window.print()">Print Order</button>
         </div>
