@@ -606,8 +606,11 @@
 
             const spiceLevel = document.querySelector('#spiceLevel .selected')?.textContent || 'No Spice';
             const vegetableChoice = document.querySelector('#vegetableChoice .selected')?.textContent || 'Cabbage and Bean Sprouts';
+            const firstDishChoice = document.querySelector('#firstDishChoice .selected')?.textContent || 'Beef';
+            const secondDishChoice = document.querySelector('#secondDishChoice .selected')?.textContent || 'Tofu';
+            const thirdDishChoice = document.querySelector('#thirdDishChoice .selected')?.textContent || 'Shrimp';
 
-            const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice})`;
+            const customizedName = `${currentItem.name} (${spiceLevel}, ${vegetableChoice}, ${firstDishChoice}, ${secondDishChoice}, ${thirdDishChoice})`;
             addToCart(customizedName, currentItem.price);
             closeModal();
         }
