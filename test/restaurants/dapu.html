@@ -455,6 +455,37 @@
             <h3>Customization Options</h3>
             <div class="customization-options">
                 <div class="option-group">
+                    <h4>1st Dish Choice</h4>
+                    <div class="option-buttons" id="firstDishChoice">
+                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Beef</button>
+                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Pork</button>
+                        <button class="option-btn" onclick="selectOption(this, 'firstDishChoice')">Lamb</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h4>2nd Dish Choice</h4>
+                    <div class="option-buttons" id="secondDishChoice">
+                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Tofu</button>
+                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Mushroom</button>
+                        <button class="option-btn" onclick="selectOption(this, 'secondDishChoice')">Tofu skin</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <h4>3rd Dish Choice</h4>
+                    <div class="option-buttons" id="thirdDishChoice">
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Shrimp</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Squid</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Crab Meat</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Halibut</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Salmon</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Basa</button>
+                        <button class="option-btn" onclick="selectOption(this, 'thirdDishChoice')">Mackerel</button>
+                    </div>
+                </div>
+
+                <div class="option-group">
                     <h4>Spice Level</h4>
                     <div class="option-buttons" id="spiceLevel">
                         <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">No Spice</button>
@@ -463,6 +494,7 @@
                         <button class="option-btn" onclick="selectOption(this, 'spiceLevel')">Hot 🌶️🌶️🌶️</button>
                     </div>
                 </div>
+
                 <div class="option-group">
                     <h4>Vegetable Choice</h4>
                     <div class="option-buttons" id="vegetableChoice">
@@ -646,6 +678,19 @@
             cart.forEach(item => {
                 // Convert English customization options to Chinese
                 let chineseItem = item.name
+                    .replace('Beef', '牛肉')
+                    .replace('Pork', '豬肉')
+                    .replace('Lamb', '羊肉')
+                    .replace('Tofu', '豆腐')
+                    .replace('Mushroom', '綜合菇')
+                    .replace('Tofu skin', '豆皮')
+                    .replace('Shrimp', '蝦')
+                    .replace('Squid', '花枝')
+                    .replace('Crab Meat', '蟳肉')
+                    .replace('Halibut', '比目魚')
+                    .replace('Salmon', '鮭魚')
+                    .replace('Basa', '巴沙魚')
+                    .replace('Mackerel', '鯖魚')
                     .replace('No Spice', '不辣')
                     .replace('Mild 🌶️', '小辣')
                     .replace('Medium 🌶️🌶️', '中辣')
