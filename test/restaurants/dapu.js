@@ -173,8 +173,8 @@ function checkout() {
 
 function closeOrderSummary() {
     document.getElementById('orderSummaryModal').style.display = 'none';
-    cart = [];
-    updateCart();
+    // cart = [];
+    // updateCart();
 }
 
 // Close modal when clicking outside
