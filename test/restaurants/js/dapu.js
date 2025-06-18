@@ -4,7 +4,7 @@ let currentItem = null;
 let menuData = null;
 
 // Load menu data
-fetch('dapu.json')
+fetch('../json/dapu.json')
     .then(response => response.json())
     .then(data => {
         menuData = data;
